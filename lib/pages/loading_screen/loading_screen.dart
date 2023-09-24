@@ -17,7 +17,17 @@ class LoadingScreen extends StatefulWidget {
 class _LoadingScreenState extends State<LoadingScreen> with AfterLayoutMixin {
   @override
   FutureOr<void> afterFirstLayout(BuildContext context) {
+    _setLocale(context);
+    if (mounted) {
+      _navigate(context);
+    }
+  }
+
+  _setLocale(BuildContext context) {
     context.read<PxLocalization>().setLocale();
+  }
+
+  _navigate(BuildContext context) {
     Future.delayed(const Duration(seconds: 3)).whenComplete(() {
       GoRouter.of(context).go(
         '/${context.read<PxLocalization>().locale.languageCode}/${PageDir.server_selection_page.name}',

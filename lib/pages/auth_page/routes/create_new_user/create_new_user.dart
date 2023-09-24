@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:single_vendor_admin_panel/components/main_appbar.dart';
-import 'package:single_vendor_admin_panel/pages/auth_page/routes/components/_w_app_user_role_dropdown_create_new_user.dart';
+import 'package:single_vendor_admin_panel/pages/auth_page/routes/create_new_user/components/_w_app_user_role_dropdown.dart';
+import 'package:single_vendor_admin_panel/pages/auth_page/routes/create_new_user/components/_w_appuser_textfield.dart';
 
+//TODO: move this page in admin and hr routes only
 class CreateNewAppUser extends StatelessWidget {
   const CreateNewAppUser({super.key});
 
@@ -15,17 +17,22 @@ class CreateNewAppUser extends StatelessWidget {
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           //todo: role
           const AppUserRoleSelectorDropdown(),
-          //TODO: user
-          //TODO: password
+          //todo: name
+          const AppUserTextField(
+            usage: Usage.email,
+          ),
+          //todo: password
+          const AppUserTextField(
+            usage: Usage.password,
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () async {},
               child: const Text("Create User"),
             ),
           ),

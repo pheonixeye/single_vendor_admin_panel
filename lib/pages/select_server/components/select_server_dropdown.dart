@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:single_vendor_admin_panel/constants/servers.dart';
-import 'package:single_vendor_admin_panel/providers/server_status_px.dart';
+import 'package:single_vendor_admin_panel/api/constants/servers.dart';
+import 'package:single_vendor_admin_panel/providers/px_server_status_px.dart';
 
 class SelectServerDropdown extends StatelessWidget {
   const SelectServerDropdown({super.key});

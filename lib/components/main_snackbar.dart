@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 SnackBar iInfoSnackbar(String message, BuildContext context, [Color? color]) {
   return SnackBar(
     padding: const EdgeInsets.all(8.0),
-    margin: const EdgeInsets.all(8.0),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(8),
     ),
-    behavior: SnackBarBehavior.floating,
+    behavior: SnackBarBehavior.fixed,
     content: Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(

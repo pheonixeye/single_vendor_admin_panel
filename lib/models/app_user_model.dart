@@ -6,13 +6,13 @@ enum UserRole {
   editor("has access to item creation and management"),
   analyst('has access to orders & reports'),
   hr('has access to app users'),
-  unknown("for data coherency 'DO NOT SELECT'");
+  unknown("for data coherency '**DO NOT SELECT**'");
 
   final String? description;
   const UserRole(this.description);
 
   static UserRole fromString(String name) {
-    switch (name) {
+    switch (name.toLowerCase()) {
       case "admin":
         return UserRole.admin;
       case "editor":
@@ -29,34 +29,72 @@ enum UserRole {
 
 class AppUser extends Equatable {
   final String? _id;
-  final String userName;
+  final String email;
   final String password;
   final UserRole role;
+  final List<UserRole>? otherRoles;
 
   AppUser({
     String? id,
-    required this.userName,
+    required this.email,
     required this.password,
     required this.role,
+    required this.otherRoles,
   }) : _id = id ?? const Uuid().v4();
 
+  factory AppUser.initial() {
+    return AppUser(
+      email: '',
+      password: '',
+      role: UserRole.unknown,
+      otherRoles: const [],
+    );
+  }
+
+  AppUser copyWith({
+    String? email,
+    String? password,
+    UserRole? role,
+    List<UserRole>? otherRoles,
+  }) {
+    return AppUser(
+      email: email ?? this.email,
+      password: password ?? this.password,
+      role: role ?? this.role,
+      otherRoles: otherRoles ?? this.otherRoles,
+    );
+  }
+
   @override
-  List<Object?> get props => [_id, userName, password, role];
+  List<Object?> get props => [
+        _id,
+        email,
+        password,
+        role,
+        otherRoles,
+      ];
+
+  @override
+  String toString() => toJson().toString();
 
   factory AppUser.fromJson(Map<String, dynamic> json) {
     return AppUser(
-      userName: json['username'],
+      email: json['username'],
       password: json['password'],
       role: UserRole.fromString(json['role']),
+      otherRoles: (json['other_roles'] as List<String>)
+          .map((e) => UserRole.fromString(e))
+          .toList(),
       id: json['uuid'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      "username": userName,
+      "username": email,
       "password": password,
       "role": role.name,
+      "other_roles": otherRoles?.map((e) => e.name).toList(),
       "uuid": _id ?? const Uuid().v4(),
     };
   }

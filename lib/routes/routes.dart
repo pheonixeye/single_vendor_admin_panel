@@ -5,7 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:single_vendor_admin_panel/core/base_navigation_page/base_navigation_page.dart';
 import 'package:single_vendor_admin_panel/pages/auth_page/auth_page.dart';
-import 'package:single_vendor_admin_panel/pages/auth_page/routes/create_new_user.dart';
+import 'package:single_vendor_admin_panel/pages/auth_page/routes/create_new_user/create_new_user.dart';
+import 'package:single_vendor_admin_panel/pages/control_panel_main/control_panel_main.dart';
 import 'package:single_vendor_admin_panel/pages/loading_screen/loading_screen.dart';
 import 'package:single_vendor_admin_panel/pages/select_server/select_server_page.dart';
 import 'package:single_vendor_admin_panel/providers/px_localization.dart';
@@ -65,6 +66,13 @@ class RoutingLogic {
                   ),
                 ],
               ),
+              GoRoute(
+                path: PageDir.control_panel_main.name,
+                name: PageDir.control_panel_main.name,
+                builder: (context, state) {
+                  return ControlPanelMain(key: state.pageKey);
+                },
+              ),
             ],
           ),
         ],
@@ -79,4 +87,5 @@ enum PageDir {
   server_selection_page,
   auth_page,
   create_app_user_page,
+  control_panel_main,
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:single_vendor_admin_panel/api/server_status.dart';
-import 'package:single_vendor_admin_panel/constants/servers.dart';
+import 'package:single_vendor_admin_panel/api/constants/servers.dart';
 
 class PxServerStatus extends ChangeNotifier {
   Server? _server;
@@ -9,6 +9,8 @@ class PxServerStatus extends ChangeNotifier {
   String? _status;
   String? get status => _status;
 
+  HxServerStatus statusService = const HxServerStatus();
+
   void selectServerAddress(Server? server) {
     _server = server;
     notifyListeners();
@@ -16,7 +18,7 @@ class PxServerStatus extends ChangeNotifier {
 
   Future checkServerStatus() async {
     try {
-      await HxServerStatus.fetchServerStatus(server!.address).then((value) {
+      await statusService.fetchServerStatus(server!).then((value) {
         _status = value;
         notifyListeners();
       });
@@ -27,7 +29,7 @@ class PxServerStatus extends ChangeNotifier {
 
   Future<String?> checkSelectedServerStatus() async {
     try {
-      _status = await HxServerStatus.fetchServerStatus(_server!.address);
+      _status = await statusService.fetchServerStatus(_server!);
       notifyListeners();
     } catch (e) {
       _status = null;

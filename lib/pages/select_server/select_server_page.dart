@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:single_vendor_admin_panel/components/main_snackbar.dart';
 import 'package:single_vendor_admin_panel/pages/select_server/components/select_server_dropdown.dart';
 import 'package:single_vendor_admin_panel/providers/px_localization.dart';
-import 'package:single_vendor_admin_panel/providers/server_status_px.dart';
+import 'package:single_vendor_admin_panel/providers/px_server_status_px.dart';
 import 'package:single_vendor_admin_panel/routes/routes.dart';
 
 class SelectServerPage extends StatelessWidget {

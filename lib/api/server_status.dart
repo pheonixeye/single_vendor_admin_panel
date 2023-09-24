@@ -1,20 +1,22 @@
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
-import 'package:single_vendor_admin_panel/api/constants/api_const.dart';
+import 'package:single_vendor_admin_panel/api/constants/servers.dart';
 import 'package:single_vendor_admin_panel/api/errors/response_exception.dart';
+import 'package:appwrite/appwrite.dart';
+// ignore: implementation_imports
+import 'package:appwrite/src/enums.dart';
 
 class HxServerStatus {
-  static Future fetchServerStatus(String address) async {
-    final Uri uri = Uri.parse(address);
-    final response = await http.get(
-      uri,
-      headers: headers,
+  const HxServerStatus();
+
+  Future fetchServerStatus(Server server) async {
+    final Response response = await server.client.call(
+      HttpMethod.get,
+      path: "/health",
     );
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body);
+
+    if (response.data['status'] == "pass") {
+      return response.data['status'];
     } else {
-      throw ResponseException(jsonDecode(response.body));
+      throw ResponseException(response.data['status']);
     }
   }
 }
