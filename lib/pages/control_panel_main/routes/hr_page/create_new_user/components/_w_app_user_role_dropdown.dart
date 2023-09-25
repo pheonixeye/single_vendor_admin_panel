@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:single_vendor_admin_panel/components/main_snackbar.dart';
 import 'package:single_vendor_admin_panel/models/app_user_model.dart';
 import 'package:single_vendor_admin_panel/providers/auth/px_app_users.dart';
-import 'package:single_vendor_admin_panel/routes/routes.dart';
 
 /// Dropdown to configure userRole in AppUserModel
 /// All [UserRole]s can be assigned except for [UserRole.unknown]
@@ -38,21 +36,13 @@ class AppUserRoleSelectorDropdown extends StatelessWidget {
                 }).toList(),
                 value: u.appUser?.role,
                 onChanged: (value) {
-                  final path = GoRouter.of(context)
-                      .routeInformationProvider
-                      .value
-                      .uri
-                      .path;
-                  if (path.contains(PageDir.auth_page.name) &&
-                      value == UserRole.admin) {
+                  if (u.loggedInAppUser?.role != UserRole.admin) {
                     showInfoSnackbar(
                       context,
                       'Creating an admin account must be created by an already existing admin account... Operation not allowed...',
                       Colors.red,
                     );
-                    u.setAppUser(
-                      role: UserRole.unknown,
-                    );
+                    return;
                   } else {
                     u.setAppUser(
                       role: value,

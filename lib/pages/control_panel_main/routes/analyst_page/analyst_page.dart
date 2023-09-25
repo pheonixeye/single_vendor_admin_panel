@@ -9,6 +9,7 @@ class AnalystPage extends StatelessWidget {
       backgroundColor: Colors.orange,
       body: Center(
         child: Text('Analyst Page'),
+        //TODO: sales and reports
       ),
     );
   }

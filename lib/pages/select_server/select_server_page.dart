@@ -11,30 +11,9 @@ import 'package:single_vendor_admin_panel/routes/routes.dart';
 class SelectServerPage extends StatelessWidget {
   const SelectServerPage({super.key});
 
-  _switchLanguage(BuildContext context) {
-    final location =
-        GoRouter.of(context).routeInformationProvider.value.uri.path;
-    final paths = location.split(RegExp('/'));
-    paths.removeAt(0);
-    paths.removeAt(0);
-    final whereToGo = paths.join('/');
-    if (context.read<PxLocalization>().locale.languageCode == 'en') {
-      GoRouter.of(context).go('/ar/$whereToGo');
-    } else {
-      GoRouter.of(context).go('/en/$whereToGo');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        heroTag: "lang-btn",
-        onPressed: () {
-          _switchLanguage(context);
-        },
-        child: Text(context.watch<PxLocalization>().locale.languageCode),
-      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

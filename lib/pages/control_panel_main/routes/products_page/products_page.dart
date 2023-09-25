@@ -5,6 +5,7 @@ class ProductsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //TODO: add items to website (content)
     return const Scaffold(
       backgroundColor: Colors.purple,
       body: Center(

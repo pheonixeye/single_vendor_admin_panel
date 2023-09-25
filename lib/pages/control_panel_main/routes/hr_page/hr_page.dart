@@ -9,6 +9,11 @@ class HRPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //TODO: create user
+    //TODO: assign user roles
+    //TODO: see user logs signin/signout times mainly ??
+    //TODO: set salary calculations //!(deferred)
+    //TODO: delete / deactivate users
     return Scaffold(
       backgroundColor: Colors.green,
       body: Card(

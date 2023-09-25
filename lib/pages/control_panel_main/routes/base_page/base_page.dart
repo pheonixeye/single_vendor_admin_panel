@@ -9,6 +9,7 @@ class BasePage extends StatelessWidget {
       backgroundColor: Colors.red,
       body: Center(
         child: Text('Base Page'),
+        //TODO: unknown usage till now, may be used later
       ),
     );
   }

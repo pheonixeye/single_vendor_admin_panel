@@ -1,5 +1,8 @@
+// ignore_for_file: library_prefixes
+
 import 'package:single_vendor_admin_panel/constants/env.dart';
-import 'package:appwrite/appwrite.dart';
+import 'package:appwrite/appwrite.dart' as clientSDK;
+import 'package:dart_appwrite/dart_appwrite.dart' as serverSDK;
 
 class Servers {
   const Servers._();
@@ -17,36 +20,52 @@ class Servers {
 
 class Server {
   final String name;
-  final Client client;
+  final clientSDK.Client clientClient;
+  final serverSDK.Client serverClient;
 
   const Server._({
     required this.name,
-    required this.client,
+    required this.clientClient,
+    required this.serverClient,
   });
 
   factory Server.dev() {
     return Server._(
       name: 'Development',
-      client: Client(endPoint: ENV.DEV_ENDPOINT, selfSigned: true)
-          .setProject(ENV.DEV_PROJECT_ID),
+      clientClient:
+          clientSDK.Client(endPoint: ENV.DEV_ENDPOINT, selfSigned: true)
+              .setProject(ENV.DEV_PROJECT_ID),
+      serverClient:
+          serverSDK.Client(endPoint: ENV.DEV_ENDPOINT, selfSigned: true)
+              .setProject(ENV.DEV_PROJECT_ID)
+              .setKey(ENV.DEV_API_KEY),
     );
   }
 
   factory Server.test() {
-    final client = Client(endPoint: ENV.TEST_ENDPOINT, selfSigned: true)
-        .setProject(ENV.TEST_PROJECT_ID);
     return Server._(
       name: 'Test-Cloud',
-      client: client,
+      clientClient:
+          clientSDK.Client(endPoint: ENV.TEST_ENDPOINT, selfSigned: true)
+              .setProject(ENV.TEST_PROJECT_ID)
+              .addHeader("X-RateLimit-Limit", "5000"),
+      serverClient:
+          serverSDK.Client(endPoint: ENV.TEST_ENDPOINT, selfSigned: true)
+              .setProject(ENV.TEST_PROJECT_ID)
+              .setKey(ENV.TEST_API_KEY),
     );
   }
 
   factory Server.production() {
-    final client = Client(endPoint: ENV.PROD_ENDPOINT, selfSigned: true)
-        .setProject(ENV.PROD_PROJECT_ID);
     return Server._(
       name: "Production",
-      client: client,
+      clientClient:
+          clientSDK.Client(endPoint: ENV.PROD_ENDPOINT, selfSigned: true)
+              .setProject(ENV.PROD_PROJECT_ID),
+      serverClient:
+          serverSDK.Client(endPoint: ENV.PROD_ENDPOINT, selfSigned: true)
+              .setProject(ENV.PROD_PROJECT_ID)
+              .setKey(ENV.PROD_API_KEY),
     );
   }
 }

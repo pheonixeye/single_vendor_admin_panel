@@ -1,8 +1,13 @@
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:single_vendor_admin_panel/providers/auth/px_app_users.dart';
 
-enum Usage { email, password }
+enum Usage { name, email, password }
+
+bool isDebug() {
+  return kDebugMode;
+}
 
 /// TextField to set AppUser model either for creation or
 /// authentication, enum [Usage] determines which field on
@@ -28,21 +33,32 @@ class _AppUserTextFieldState extends State<AppUserTextField> {
           child: Consumer<PxAppUsers>(
             builder: (context, u, c) {
               return TextFormField(
+                initialValue: isDebug()
+                    ? switch (widget.usage) {
+                        Usage.email => 'admin@admin.com',
+                        Usage.password => 'adminadmin',
+                        Usage.name => '',
+                      }
+                    : '',
                 obscureText: switch (widget.usage) {
-                  Usage.email => false,
+                  Usage.email || Usage.name => false,
                   Usage.password => _isHidden,
                 },
                 decoration: InputDecoration(
                   hintText: switch (widget.usage) {
                     Usage.email ||
+                    Usage.name ||
                     Usage.password =>
                       "Enter ${widget.usage.name} ...",
                   },
                   labelText: switch (widget.usage) {
-                    Usage.email || Usage.password => widget.usage.name,
+                    Usage.email ||
+                    Usage.password ||
+                    Usage.name =>
+                      widget.usage.name,
                   },
                   suffix: switch (widget.usage) {
-                    Usage.email => const IconButton(
+                    Usage.email || Usage.name => const IconButton(
                         onPressed: null,
                         icon: Icon(
                           Icons.password,
@@ -65,6 +81,9 @@ class _AppUserTextFieldState extends State<AppUserTextField> {
                   switch (widget.usage) {
                     case Usage.email:
                       u.setAppUser(email: value);
+                      break;
+                    case Usage.name:
+                      u.setAppUser(name: value);
                       break;
                     case Usage.password:
                       u.setAppUser(password: value);

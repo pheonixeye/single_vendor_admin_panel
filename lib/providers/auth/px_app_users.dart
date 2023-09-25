@@ -1,13 +1,18 @@
+import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 import 'package:flutter/material.dart';
 import 'package:single_vendor_admin_panel/api/appusers/hx_appusers.dart';
 import 'package:single_vendor_admin_panel/models/app_user_model.dart';
+import 'package:uuid/uuid.dart';
 
 class PxAppUsers extends ChangeNotifier {
-  AppUser? _appUser = AppUser.initial();
-
   PxAppUsers({required this.usersService});
+
+  AppUser? _appUser = AppUser.initial();
   AppUser? get appUser => _appUser;
+
+  AppUser? _loggedInAppUser = AppUser.initial();
+  AppUser? get loggedInAppUser => _loggedInAppUser;
 
   Session? _userSession;
   Session? get userSession => _userSession;
@@ -19,32 +24,26 @@ class PxAppUsers extends ChangeNotifier {
 
   void setAppUser({
     String? email,
+    String? name,
     String? password,
     UserRole? role,
     List<UserRole>? otherRoles,
   }) {
     _appUser = _appUser?.copyWith(
+      id: const Uuid().v4(),
       email: email,
+      name: name,
       password: password,
       role: role,
       otherRoles: otherRoles,
     );
     notifyListeners();
+    print(_appUser.toString());
   }
 
-  Future<AppUser?> createAppUser() async {
+  Future<void> createAppUser() async {
     try {
-      final User? user = await usersService.addNewAppUser(appUser!);
-      _appUser = _appUser?.copyWith(
-        email: user?.email,
-        password: user?.password,
-        id: user?.$id,
-        role: user?.name != null
-            ? UserRole.fromString(user!.name)
-            : UserRole.unknown,
-      );
-      notifyListeners();
-      return _appUser;
+      await usersService.addNewAppUser(appUser!);
     } catch (e) {
       rethrow;
     }
@@ -69,16 +68,17 @@ class PxAppUsers extends ChangeNotifier {
     try {
       var usr = await usersService.getLoggedInUser();
       _loggedInUser = usr;
-      _appUser = _appUser?.copyWith(
+      _loggedInAppUser = _loggedInAppUser?.copyWith(
         email: _loggedInUser?.email,
         password: _loggedInUser?.password,
+        name: _loggedInUser?.name,
         id: _loggedInUser?.$id,
-        role: _loggedInUser?.name == null
-            ? UserRole.unknown
-            : UserRole.fromString(_loggedInUser!.name),
+        role: UserRole.fromString(_loggedInUser?.prefs.data['role']),
+        otherRoles: UserRole.userRoleListFromListString(
+            _loggedInUser?.labels.map((e) => e.toString()).toList()),
       );
       notifyListeners();
-      return _appUser;
+      return _loggedInAppUser;
     } catch (e) {
       rethrow;
     }

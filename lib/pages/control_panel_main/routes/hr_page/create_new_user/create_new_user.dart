@@ -29,6 +29,9 @@ class CreateNewAppUser extends StatelessWidget {
           const AppUserRoleSelectorDropdown(),
           //todo: name
           const AppUserTextField(
+            usage: Usage.name,
+          ),
+          const AppUserTextField(
             usage: Usage.email,
           ),
           //todo: password

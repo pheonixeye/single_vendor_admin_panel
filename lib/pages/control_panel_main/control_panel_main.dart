@@ -20,22 +20,12 @@ class ControlPanelMain extends StatefulWidget {
 }
 
 class _ControlPanelMainState extends State<ControlPanelMain>
-    with AfterLayoutMixin {
+    with AfterLayoutMixin, SingleTickerProviderStateMixin {
   late final SidebarXController _controller;
-  late final PageController _pageController;
-
-  // static const List<Widget> _pages = [
-  //   BasePage(),
-  //   AdminPanelPage(),
-  //   AnalystPage(),
-  //   HRPage(),
-  //   ProductsPage(),
-  //   SettingsPage(),
-  // ];
-
-  Widget buildPage(int index) {
-    return PageBuilder.values[index].page;
-  }
+  late final AnimationController _animationController;
+  late final Animation<double> _animation;
+  List<SidebarXItem> _items = [];
+  final _pageBuilderPages = PageSelectorBuilder();
 
   List<SidebarXItem> footerItems() => [
         SidebarXItem(
@@ -70,24 +60,33 @@ class _ControlPanelMainState extends State<ControlPanelMain>
             await showMainDialog(context);
             setState(() {
               _controller.selectIndex(0);
-              _controller.setExtended(false);
+              if (_controller.extended) {
+                _controller.setExtended(false);
+              }
             });
           },
         ),
       ];
 
-  List<SidebarXItem> menuItems(SidebarXController controller) => [
-        ...PageBuilder.values.map((e) {
+  List<SidebarXItem> menuItems() => [
+        ..._pageBuilderPages
+            .selectorBuilder(context.read<PxAppUsers>().loggedInAppUser!.role)
+            .map((e) {
           return SidebarXItem(
             label: e.name,
             iconWidget: e.icon,
             onTap: () {
               setState(() {
-                // controller.selectIndex(PageBuilder.values.indexOf(e));
-                _pageController.animateToPage(PageBuilder.values.indexOf(e),
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.easeIn);
-                controller.setExtended(false);
+                if (!_animationController.isCompleted) {
+                  _animationController.forward();
+                } else {
+                  _animationController.reset();
+                  _animationController.forward();
+                }
+                _controller.selectIndex(PageReference.values.indexOf(e));
+                if (_controller.extended) {
+                  _controller.setExtended(false);
+                }
               });
             },
           );
@@ -99,23 +98,33 @@ class _ControlPanelMainState extends State<ControlPanelMain>
     super.initState();
     _controller = SidebarXController(
       selectedIndex: 0,
-      extended: true,
+      extended: false,
     );
-    _pageController = PageController(
-      initialPage: _controller.selectedIndex,
+    _animationController = AnimationController(
+      vsync: this,
+      lowerBound: 0.5,
+      upperBound: 1.0,
+      duration: const Duration(milliseconds: 1000),
     );
+    _animation = Animation.fromValueListenable(_animationController);
   }
 
   @override
   void dispose() {
     _controller.dispose();
-    _pageController.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
   @override
   FutureOr<void> afterFirstLayout(BuildContext context) async {
-    await context.read<PxAppUsers>().fetchLoggedInUser();
+    await context.read<PxAppUsers>().fetchLoggedInUser().then((_) {
+      setState(() {
+        _items = menuItems();
+      });
+    });
+    _animationController.forward();
+    print('loggedin: ${context.read<PxAppUsers>().loggedInAppUser!.toJson()}');
   }
 
   @override
@@ -125,38 +134,61 @@ class _ControlPanelMainState extends State<ControlPanelMain>
         children: [
           SidebarX(
             controller: _controller,
-            items: menuItems(_controller),
-            theme: const SidebarXTheme(
+            items: _items,
+            theme: SidebarXTheme(
               width: 70,
-              iconTheme: IconThemeData(),
-              selectedIconTheme: IconThemeData(
+              iconTheme: const IconThemeData(),
+              selectedIconTheme: const IconThemeData(
                 size: 42,
                 color: Colors.blue,
+              ),
+              selectedItemDecoration: BoxDecoration(
+                color: Colors.amber,
+                border: Border.all(
+                  width: 0.5,
+                ),
+                borderRadius: BorderRadius.circular(8),
               ),
             ),
             extendedTheme: SidebarXTheme(
               width: 250,
               hoverColor: Colors.orange.shade200,
-              itemTextPadding: const EdgeInsets.all(8),
-              selectedItemTextPadding: const EdgeInsets.all(12),
-              selectedIconTheme: const IconThemeData(
-                size: 42,
-                color: Colors.blue,
-              ),
+              itemPadding: const EdgeInsets.all(4),
+              selectedItemTextPadding:
+                  const EdgeInsets.symmetric(horizontal: 12),
               selectedTextStyle: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
               selectedItemDecoration: BoxDecoration(
                 color: Colors.amber,
-                border: Border.all(),
+                border: Border.all(
+                  width: 0.5,
+                ),
                 borderRadius: BorderRadius.circular(8),
+              ),
+              decoration: BoxDecoration(
+                color: Colors.blue.shade200,
+                border: Border.all(
+                  color: Colors.grey,
+                  width: 0.5,
+                ),
+                borderRadius: BorderRadius.circular(8),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.shade300,
+                    offset: const Offset(3, 3),
+                    blurStyle: BlurStyle.outer,
+                    blurRadius: 2,
+                    spreadRadius: 2,
+                  ),
+                ],
               ),
             ),
             headerBuilder: (context, extended) {
               return Consumer<PxAppUsers>(
                 builder: (context, u, c) {
-                  while (u.appUser == null) {
+                  while (u.loggedInAppUser == null) {
                     return const Text(
                       "Loading...",
                       textAlign: TextAlign.center,
@@ -169,9 +201,9 @@ class _ControlPanelMainState extends State<ControlPanelMain>
                           ? ListTile(
                               title: const Text("User"),
                               subtitle: Text(
-                                u.appUser!.email == ''
+                                u.loggedInAppUser!.email == ''
                                     ? "Anonymous User"
-                                    : u.appUser!.email,
+                                    : u.loggedInAppUser!.email,
                                 style: const TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
@@ -186,7 +218,7 @@ class _ControlPanelMainState extends State<ControlPanelMain>
                           ? ListTile(
                               title: const Text("Role"),
                               subtitle: Text(
-                                u.appUser!.role.name,
+                                u.loggedInAppUser!.role.name,
                                 style: const TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
@@ -216,11 +248,19 @@ class _ControlPanelMainState extends State<ControlPanelMain>
             footerItems: footerItems(),
           ),
           Expanded(
-            child: PageView.builder(
-              controller: _pageController,
-              itemCount: PageBuilder.values.length,
-              itemBuilder: (context, index) {
-                return buildPage(_controller.selectedIndex);
+            child: AnimatedBuilder(
+              animation: _animationController,
+              child: _pageBuilderPages
+                  .selectorBuilder(context
+                      .read<PxAppUsers>()
+                      .loggedInAppUser!
+                      .role)[_controller.selectedIndex]
+                  .page,
+              builder: (context, child) {
+                return FadeTransition(
+                  opacity: _animation,
+                  child: child,
+                );
               },
             ),
           )

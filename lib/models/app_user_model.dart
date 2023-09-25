@@ -3,15 +3,18 @@ import 'package:equatable/equatable.dart';
 
 enum UserRole {
   admin("has access to all app privileges."),
-  editor("has access to item creation and management"),
+  editor("has access to item creation and management in products page"),
   analyst('has access to orders & reports'),
-  hr('has access to app users'),
+  hr('has access to admin app & website users'),
+  sales('has access to sales dashboard'),
+  inventory('has access to inventory & stock panel'),
   unknown("for data coherency '**DO NOT SELECT**'");
 
   final String? description;
   const UserRole(this.description);
 
-  static UserRole fromString(String name) {
+  static UserRole fromString(String? name) {
+    if (name == null) return UserRole.unknown;
     switch (name.toLowerCase()) {
       case "admin":
         return UserRole.admin;
@@ -21,23 +24,34 @@ enum UserRole {
         return UserRole.analyst;
       case "hr":
         return UserRole.hr;
+      case "sales":
+        return UserRole.sales;
+      case "inventory":
+        return UserRole.inventory;
       default:
         return UserRole.unknown;
     }
+  }
+
+  static List<UserRole> userRoleListFromListString(List<String>? otherRoles) {
+    if (otherRoles == null) return [];
+    return otherRoles.map((e) => UserRole.fromString(e)).toList();
   }
 }
 
 class AppUser extends Equatable {
   final String? id;
   final String email;
+  final String name;
   final String password;
   final UserRole role;
-  final List<UserRole>? otherRoles;
+  final List<UserRole> otherRoles;
 
   AppUser({
     String? id,
     required this.email,
     required this.password,
+    required this.name,
     required this.role,
     required this.otherRoles,
   }) : id = id ?? const Uuid().v4();
@@ -46,6 +60,7 @@ class AppUser extends Equatable {
     return AppUser(
       email: '',
       password: '',
+      name: '',
       role: UserRole.unknown,
       otherRoles: const [],
     );
@@ -55,6 +70,7 @@ class AppUser extends Equatable {
     String? id,
     String? email,
     String? password,
+    String? name,
     UserRole? role,
     List<UserRole>? otherRoles,
   }) {
@@ -62,6 +78,7 @@ class AppUser extends Equatable {
       id: id ?? this.id,
       email: email ?? this.email,
       password: password ?? this.password,
+      name: name ?? this.name,
       role: role ?? this.role,
       otherRoles: otherRoles ?? this.otherRoles,
     );
@@ -72,6 +89,7 @@ class AppUser extends Equatable {
         id,
         email,
         password,
+        name,
         role,
         otherRoles,
       ];
@@ -83,6 +101,7 @@ class AppUser extends Equatable {
     return AppUser(
       email: json['username'],
       password: json['password'],
+      name: json['name'],
       role: UserRole.fromString(json['role']),
       otherRoles: (json['other_roles'] as List<String>)
           .map((e) => UserRole.fromString(e))
@@ -95,8 +114,9 @@ class AppUser extends Equatable {
     return {
       "username": email,
       "password": password,
+      'name': name,
       "role": role.name,
-      "other_roles": otherRoles?.map((e) => e.name).toList(),
+      "other_roles": otherRoles.map((e) => e.name).toList(),
       "uuid": id ?? const Uuid().v4(),
     };
   }
