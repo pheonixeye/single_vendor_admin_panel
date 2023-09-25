@@ -36,7 +36,7 @@ class AppUserRoleSelectorDropdown extends StatelessWidget {
                     ),
                   );
                 }).toList(),
-                value: u.appUser.role,
+                value: u.appUser?.role,
                 onChanged: (value) {
                   final path = GoRouter.of(context)
                       .routeInformationProvider

@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
-import 'package:single_vendor_admin_panel/constants/env.dart';
 import 'package:single_vendor_admin_panel/core/localization/app_localizations.dart';
 import 'package:single_vendor_admin_panel/providers/_px_main.dart';
 import 'package:single_vendor_admin_panel/providers/px_localization.dart';
 import 'package:single_vendor_admin_panel/routes/routes.dart';
 
 Future main() async {
-  await dotenv.load(fileName: ENVIRONMENT.test.path);
   runApp(const MyApp());
 }
 

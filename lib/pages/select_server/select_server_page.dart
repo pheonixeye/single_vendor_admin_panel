@@ -55,8 +55,7 @@ class SelectServerPage extends StatelessWidget {
                         const SizedBox(width: 20),
                         Icon(
                           s.status == null ? Icons.info : Icons.check,
-                          color: (s.status == null ||
-                                  s.status != "Server Online...")
+                          color: (s.status == null || s.status != "pass")
                               ? Colors.yellow
                               : Colors.green,
                         ),

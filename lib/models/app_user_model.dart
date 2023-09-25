@@ -28,7 +28,7 @@ enum UserRole {
 }
 
 class AppUser extends Equatable {
-  final String? _id;
+  final String? id;
   final String email;
   final String password;
   final UserRole role;
@@ -40,7 +40,7 @@ class AppUser extends Equatable {
     required this.password,
     required this.role,
     required this.otherRoles,
-  }) : _id = id ?? const Uuid().v4();
+  }) : id = id ?? const Uuid().v4();
 
   factory AppUser.initial() {
     return AppUser(
@@ -52,12 +52,14 @@ class AppUser extends Equatable {
   }
 
   AppUser copyWith({
+    String? id,
     String? email,
     String? password,
     UserRole? role,
     List<UserRole>? otherRoles,
   }) {
     return AppUser(
+      id: id ?? this.id,
       email: email ?? this.email,
       password: password ?? this.password,
       role: role ?? this.role,
@@ -67,7 +69,7 @@ class AppUser extends Equatable {
 
   @override
   List<Object?> get props => [
-        _id,
+        id,
         email,
         password,
         role,
@@ -95,7 +97,7 @@ class AppUser extends Equatable {
       "password": password,
       "role": role.name,
       "other_roles": otherRoles?.map((e) => e.name).toList(),
-      "uuid": _id ?? const Uuid().v4(),
+      "uuid": id ?? const Uuid().v4(),
     };
   }
 }

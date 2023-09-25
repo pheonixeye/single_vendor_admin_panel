@@ -1,1 +1,1 @@
-const headers = {"content-type": "application/json"};
+Map<String, String> headers = {"content-type": "application/json"};

@@ -1,8 +1,5 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:single_vendor_admin_panel/constants/env.dart';
 import 'package:appwrite/appwrite.dart';
-
-final _client = Client();
 
 class Servers {
   const Servers._();
@@ -30,29 +27,26 @@ class Server {
   factory Server.dev() {
     return Server._(
       name: 'Development',
-      client: _client
-          .setEndpoint(dotenv.get(ENV.ENDPOINT))
-          .setProject(dotenv.get(ENV.PROJECT_ID))
-          .addHeader('X-Appwrite-Key', dotenv.get(ENV.API_KEY))
-          .setSelfSigned(status: true),
+      client: Client(endPoint: ENV.DEV_ENDPOINT, selfSigned: true)
+          .setProject(ENV.DEV_PROJECT_ID),
     );
   }
 
   factory Server.test() {
+    final client = Client(endPoint: ENV.TEST_ENDPOINT, selfSigned: true)
+        .setProject(ENV.TEST_PROJECT_ID);
     return Server._(
       name: 'Test-Cloud',
-      client: _client
-          .setEndpoint(dotenv.get(ENV.ENDPOINT))
-          .setProject(dotenv.get(ENV.PROJECT_ID))
-          .addHeader('X-Appwrite-Key', dotenv.get(ENV.API_KEY))
-          .setSelfSigned(status: true),
+      client: client,
     );
   }
 
   factory Server.production() {
+    final client = Client(endPoint: ENV.PROD_ENDPOINT, selfSigned: true)
+        .setProject(ENV.PROD_PROJECT_ID);
     return Server._(
       name: "Production",
-      client: _client,
+      client: client,
     );
   }
 }
