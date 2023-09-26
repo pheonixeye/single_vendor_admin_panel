@@ -13,7 +13,7 @@ SnackBar iInfoSnackbar(String message, BuildContext context, [Color? color]) {
     showCloseIcon: true,
     content: Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Row(
+      child: Wrap(
         children: [
           SelectableText(message),
           const SizedBox(

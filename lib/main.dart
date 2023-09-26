@@ -5,6 +5,7 @@ import 'package:single_vendor_admin_panel/core/localization/app_localizations.da
 import 'package:single_vendor_admin_panel/providers/_px_main.dart';
 import 'package:single_vendor_admin_panel/providers/px_localization.dart';
 import 'package:single_vendor_admin_panel/routes/routes.dart';
+import 'package:single_vendor_admin_panel/theme/sidebar_x_theme.dart';
 
 Future main() async {
   runApp(const MyApp());
@@ -24,8 +25,16 @@ class MyApp extends StatelessWidget {
               title: 'Single Vendor Admin Panel',
               //TODO: extract away theming into a scope
               theme: ThemeData(
-                colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
-                scaffoldBackgroundColor: Theme.of(context).primaryColor,
+                primaryColor: primaryColor,
+                scaffoldBackgroundColor: scaffoldBackgroundColor,
+                canvasColor: canvasColor,
+                textTheme: const TextTheme(
+                  headlineSmall: TextStyle(
+                    color: Colors.white,
+                    fontSize: 46,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
                 useMaterial3: true,
                 cardTheme: CardTheme(
                   elevation: 10,

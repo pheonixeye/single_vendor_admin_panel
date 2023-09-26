@@ -1,4 +1,3 @@
-import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 import 'package:flutter/material.dart';
 import 'package:single_vendor_admin_panel/api/appusers/hx_appusers.dart';
@@ -7,6 +6,9 @@ import 'package:uuid/uuid.dart';
 
 class PxAppUsers extends ChangeNotifier {
   PxAppUsers({required this.usersService});
+
+  AppUserList? _appUserList;
+  AppUserList? get appUserList => _appUserList;
 
   AppUser? _appUser = AppUser.initial();
   AppUser? get appUser => _appUser;
@@ -68,6 +70,7 @@ class PxAppUsers extends ChangeNotifier {
     try {
       var usr = await usersService.getLoggedInUser();
       _loggedInUser = usr;
+      print(_loggedInUser?.toMap().toString());
       _loggedInAppUser = _loggedInAppUser?.copyWith(
         email: _loggedInUser?.email,
         password: _loggedInUser?.password,
@@ -98,6 +101,52 @@ class PxAppUsers extends ChangeNotifier {
   Future<dynamic> clearLoginSessions() async {
     try {
       await usersService.clearLoginSessions();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<AppUserList?> fetchAllAppUsers() async {
+    try {
+      final u = await usersService.getAllAppUsers();
+      _appUserList = u;
+      notifyListeners();
+      return _appUserList;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  void updateAppUsersList(AppUser newUser, [bool toRemove = false]) {
+    _appUserList = _appUserList?.update(newUser, toRemove);
+    notifyListeners();
+  }
+
+  Future<AppUser?> fetchOneAppUser(String userId,
+      [bool toRemove = false]) async {
+    try {
+      final u = await usersService.fetchOneAppUser(userId);
+      updateAppUsersList(u!, toRemove);
+
+      return u;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> updateAppUser(AppUser appUser, UserUpdate update) async {
+    try {
+      await usersService.updateOneAppUser(appUser, update);
+      await fetchOneAppUser(appUser.id!);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> deleteUser(AppUser appUser) async {
+    try {
+      await usersService.deleteAppUser(appUser);
+      updateAppUsersList(appUser, true);
     } catch (e) {
       rethrow;
     }

@@ -20,48 +20,48 @@ enum PageReference {
   adminPanel(
     name: 'Admin Panel',
     page: AdminPanelPage(),
-    icon: Icon(Icons.home),
+    icon: Icons.home,
   ),
   analystPage(
     name: 'Analyst Page',
     page: AnalystPage(),
-    icon: Icon(Icons.analytics),
+    icon: Icons.analytics,
   ),
   // basePage(
   //     name: "Base Page",
   //     page: BasePage(),
-  //     icon: Icon(
+  //     icon:
   //       Icons.badge_sharp,
-  //     )),
+  //     ),
   hrPage(
     name: 'HR Page',
     page: HRPage(),
-    icon: Icon(Icons.person_2),
+    icon: Icons.person_2,
   ),
   productsPage(
     name: "Products Page",
     page: ProductsPage(),
-    icon: Icon(Icons.production_quantity_limits),
+    icon: Icons.production_quantity_limits,
   ),
   salesPage(
     name: "Sales Page",
     page: SalesPage(),
-    icon: Icon(Icons.monetization_on),
+    icon: Icons.monetization_on,
   ),
   inventoryPage(
     name: "Inventory Page",
     page: InventoryPage(),
-    icon: Icon(Icons.inventory),
+    icon: Icons.inventory,
   ),
   settingsPage(
     name: "Settings Page",
     page: SettingsPage(),
-    icon: Icon(Icons.settings),
+    icon: Icons.settings,
   );
 
   final Widget page;
   final String name;
-  final Icon icon;
+  final IconData icon;
 
   const PageReference({
     required this.name,
@@ -74,46 +74,93 @@ class PageSelectorBuilder {
   PageSelectorBuilder() : pages = PageReference.values.map((e) => e).toList();
   final List<PageReference> pages;
 
-  List<PageReference> selectorBuilder(UserRole role) {
+  List<PageReference> rolesSelectorBuilder(List<UserRole> roles) {
+    List<PageReference> list = [];
+    roles.map((e) {
+      switch (e) {
+        case UserRole.admin:
+          break;
+        case UserRole.editor:
+          list.add(PageReference.productsPage);
+          break;
+        case UserRole.analyst:
+          list.add(PageReference.analystPage);
+          break;
+        case UserRole.hr:
+          list.add(PageReference.hrPage);
+          break;
+        case UserRole.sales:
+          list.add(PageReference.salesPage);
+          break;
+        case UserRole.inventory:
+          list.add(PageReference.inventoryPage);
+          break;
+        case UserRole.unknown:
+          break;
+      }
+    }).toList();
+    return list;
+  }
+
+  List<PageReference> selectorBuilder(
+      UserRole role, List<UserRole> otherRoles) {
+    List<PageReference> newPages = [];
     switch (role) {
       case UserRole.admin:
         return pages;
       case UserRole.editor:
-        final Iterable<PageReference> newPages = pages.where((e) {
+        newPages = pages.where((e) {
           return e.name == "Products Page" || e.name == "Settings Page";
-        });
+        }).toList();
 
-        return newPages.toList();
+        // newPages.addAll(rolesSelectorBuilder(otherRoles));
+        break;
+      // return newPages;
       case UserRole.analyst:
-        final Iterable<PageReference> newPages = pages.where((e) {
+        newPages = pages.where((e) {
           return e.name == "Analyst Page" || e.name == "Settings Page";
-        });
+        }).toList();
 
-        return newPages.toList();
+        // newPages.addAll(rolesSelectorBuilder(otherRoles));
+        break;
+      // return newPages;
       case UserRole.hr:
-        final Iterable<PageReference> newPages = pages.where((e) {
+        newPages = pages.where((e) {
           return e.name == "HR Page" || e.name == "Settings Page";
-        });
+        }).toList();
 
-        return newPages.toList();
+        // newPages.addAll(rolesSelectorBuilder(otherRoles));
+        break;
+      // return newPages;
       case UserRole.sales:
-        final Iterable<PageReference> newPages = pages.where((e) {
+        newPages = pages.where((e) {
           return e.name == "Sales Page" || e.name == "Settings Page";
-        });
+        }).toList();
 
-        return newPages.toList();
+        // newPages.addAll(rolesSelectorBuilder(otherRoles));
+        break;
+      // return newPages;
       case UserRole.inventory:
-        final Iterable<PageReference> newPages = pages.where((e) {
+        newPages = pages.where((e) {
           return e.name == "Inventory Page" || e.name == "Settings Page";
-        });
+        }).toList();
 
-        return newPages.toList();
+        // newPages.addAll(rolesSelectorBuilder(otherRoles));
+        break;
+      // return newPages;
       case UserRole.unknown:
-        final Iterable<PageReference> newPages = pages.where((e) {
+        newPages = pages.where((e) {
           return e.name == "Settings Page";
-        });
+        }).toList();
 
-        return newPages.toList();
+        // newPages.addAll(rolesSelectorBuilder(otherRoles));
+        break;
+      // return newPages;
     }
+    newPages.addAll(rolesSelectorBuilder(otherRoles));
+    newPages.sort((refa, refb) {
+      return refa.name == "Settings Page" ? 1 : 0;
+    });
+    return newPages;
   }
 }

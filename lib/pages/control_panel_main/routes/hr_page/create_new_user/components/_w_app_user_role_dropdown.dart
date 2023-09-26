@@ -36,7 +36,8 @@ class AppUserRoleSelectorDropdown extends StatelessWidget {
                 }).toList(),
                 value: u.appUser?.role,
                 onChanged: (value) {
-                  if (u.loggedInAppUser?.role != UserRole.admin) {
+                  if (value == UserRole.admin &&
+                      u.loggedInAppUser?.role != UserRole.admin) {
                     showInfoSnackbar(
                       context,
                       'Creating an admin account must be created by an already existing admin account... Operation not allowed...',

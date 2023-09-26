@@ -8,6 +8,7 @@ enum UserUpdate {
   mainRole,
   roles,
   emailVerification,
+  activity,
 }
 
 class HxAppUsers {
@@ -41,13 +42,15 @@ class HxAppUsers {
 
       await users.updateLabels(
         userId: user.$id,
-        labels: appUser.otherRoles.map((e) => e.name).toList(),
+        labels: ['appuser'],
       );
 
       return AppUser(
+        id: user.$id,
         email: user.email,
         password: user.password!,
         name: user.name,
+        status: user.status,
         role: UserRole.fromString(user.prefs.data['role']),
         otherRoles: UserRole.userRoleListFromListString(
             user.labels.map((e) => e.toString()).toList()),
@@ -57,11 +60,41 @@ class HxAppUsers {
     }
   }
 
-  Future<String?> deleteAppUser(AppUser appUser) async {}
+  Future<dynamic> deleteAppUser(AppUser appUser) async {
+    final server_sdk.Users users = server_sdk.Users(server.serverClient);
+    try {
+      final response = await users.delete(userId: appUser.id!);
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
 
-  Future<AppUserList?> getAllAppUsers() async {}
+  Future<AppUserList?> getAllAppUsers() async {
+    final server_sdk.Users users = server_sdk.Users(server.serverClient);
+    try {
+      // server_sdk.Query.search('Labels', 'appuser')
+      final response = await users.list(queries: []);
+      final filteredAppUsers = response.users
+          .map((e) => AppUser(
+                id: e.$id,
+                email: e.email,
+                password: e.password!,
+                status: e.status,
+                name: e.name,
+                role: UserRole.fromString(e.prefs.data['role']),
+                otherRoles: UserRole.userRoleListFromListString(
+                    e.labels.map((e) => e.toString()).toList()),
+              ))
+          .toList();
+      final result = AppUserList(users: filteredAppUsers);
+      return result;
+    } catch (e) {
+      rethrow;
+    }
+  }
 
-  Future<User?> updateOneAppUser(
+  Future<void> updateOneAppUser(
     AppUser appUser,
     UserUpdate update,
   ) async {
@@ -86,6 +119,11 @@ class HxAppUsers {
         await users.updateEmailVerification(
           userId: appUser.id!,
           emailVerification: !user.emailVerification,
+        );
+      case UserUpdate.activity:
+        await users.updateStatus(
+          userId: appUser.id!,
+          status: !appUser.status,
         );
     }
   }
@@ -135,6 +173,27 @@ class HxAppUsers {
       final Session response = await account.createAnonymousSession();
 
       return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<AppUser?> fetchOneAppUser(String userId) async {
+    final server_sdk.Users users = server_sdk.Users(server.serverClient);
+    try {
+      final user = await users.get(userId: userId);
+      final AppUser appUser = AppUser(
+        id: userId,
+        email: user.email,
+        password: user.password!,
+        status: user.status,
+        name: user.name,
+        role: UserRole.fromString(user.prefs.data['role']),
+        otherRoles: UserRole.userRoleListFromListString(
+            user.labels.map((e) => e.toString()).toList()),
+      );
+
+      return appUser;
     } catch (e) {
       rethrow;
     }

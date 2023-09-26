@@ -10,7 +10,7 @@ enum UserRole {
   inventory('has access to inventory & stock panel'),
   unknown("for data coherency '**DO NOT SELECT**'");
 
-  final String? description;
+  final String description;
   const UserRole(this.description);
 
   static UserRole fromString(String? name) {
@@ -44,6 +44,7 @@ class AppUser extends Equatable {
   final String email;
   final String name;
   final String password;
+  final bool status;
   final UserRole role;
   final List<UserRole> otherRoles;
 
@@ -52,6 +53,7 @@ class AppUser extends Equatable {
     required this.email,
     required this.password,
     required this.name,
+    required this.status,
     required this.role,
     required this.otherRoles,
   }) : id = id ?? const Uuid().v4();
@@ -61,6 +63,7 @@ class AppUser extends Equatable {
       email: '',
       password: '',
       name: '',
+      status: true,
       role: UserRole.unknown,
       otherRoles: const [],
     );
@@ -71,6 +74,7 @@ class AppUser extends Equatable {
     String? email,
     String? password,
     String? name,
+    bool? status,
     UserRole? role,
     List<UserRole>? otherRoles,
   }) {
@@ -79,6 +83,7 @@ class AppUser extends Equatable {
       email: email ?? this.email,
       password: password ?? this.password,
       name: name ?? this.name,
+      status: status ?? this.status,
       role: role ?? this.role,
       otherRoles: otherRoles ?? this.otherRoles,
     );
@@ -90,6 +95,7 @@ class AppUser extends Equatable {
         email,
         password,
         name,
+        status,
         role,
         otherRoles,
       ];
@@ -102,6 +108,7 @@ class AppUser extends Equatable {
       email: json['username'],
       password: json['password'],
       name: json['name'],
+      status: json['status'],
       role: UserRole.fromString(json['role']),
       otherRoles: (json['other_roles'] as List<String>)
           .map((e) => UserRole.fromString(e))
@@ -115,6 +122,7 @@ class AppUser extends Equatable {
       "username": email,
       "password": password,
       'name': name,
+      'status': status,
       "role": role.name,
       "other_roles": otherRoles.map((e) => e.name).toList(),
       "uuid": id ?? const Uuid().v4(),
@@ -134,6 +142,22 @@ class AppUserList extends Equatable {
     return AppUserList(
       users: json.map((e) => AppUser.fromJson(e)).toList(),
     );
+  }
+
+  AppUserList update(AppUser newUser, [bool toRemove = false]) {
+    List<AppUser> _new = [];
+    users.map((e) {
+      if (toRemove) {
+        _new = users.where((e) => e.id != newUser.id).toList();
+      } else {
+        if (e.id == newUser.id) {
+          _new.add(newUser);
+        } else {
+          _new.add(e);
+        }
+      }
+    }).toList();
+    return AppUserList(users: _new);
   }
 
   List<Map<String, dynamic>> toJson() {

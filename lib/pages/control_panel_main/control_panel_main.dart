@@ -11,6 +11,7 @@ import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/base_p
 import 'package:single_vendor_admin_panel/providers/auth/px_app_users.dart';
 import 'package:single_vendor_admin_panel/providers/px_localization.dart';
 import 'package:single_vendor_admin_panel/routes/routes.dart';
+import 'package:single_vendor_admin_panel/theme/sidebar_x_theme.dart';
 
 class ControlPanelMain extends StatefulWidget {
   const ControlPanelMain({super.key});
@@ -30,7 +31,7 @@ class _ControlPanelMainState extends State<ControlPanelMain>
   List<SidebarXItem> footerItems() => [
         SidebarXItem(
           label: "Log Out",
-          iconWidget: const Icon(Icons.logout),
+          icon: Icons.logout,
           onTap: () async {
             try {
               await EasyLoading.show(status: "LOADING...");
@@ -48,14 +49,14 @@ class _ControlPanelMainState extends State<ControlPanelMain>
             } catch (e) {
               await EasyLoading.dismiss();
               if (mounted) {
-                showInfoSnackbar(context, 'Log Out Failed...', Colors.red);
+                showInfoSnackbar(context, e.toString(), Colors.red);
               }
             }
           },
         ),
         SidebarXItem(
           label: "About",
-          iconWidget: const Icon(Icons.info),
+          icon: Icons.info,
           onTap: () async {
             await showMainDialog(context);
             setState(() {
@@ -70,11 +71,14 @@ class _ControlPanelMainState extends State<ControlPanelMain>
 
   List<SidebarXItem> menuItems() => [
         ..._pageBuilderPages
-            .selectorBuilder(context.read<PxAppUsers>().loggedInAppUser!.role)
+            .selectorBuilder(
+          context.read<PxAppUsers>().loggedInAppUser!.role,
+          context.read<PxAppUsers>().loggedInAppUser!.otherRoles,
+        )
             .map((e) {
           return SidebarXItem(
             label: e.name,
-            iconWidget: e.icon,
+            icon: e.icon,
             onTap: () {
               setState(() {
                 if (!_animationController.isCompleted) {
@@ -124,7 +128,6 @@ class _ControlPanelMainState extends State<ControlPanelMain>
       });
     });
     _animationController.forward();
-    print('loggedin: ${context.read<PxAppUsers>().loggedInAppUser!.toJson()}');
   }
 
   @override
@@ -135,56 +138,8 @@ class _ControlPanelMainState extends State<ControlPanelMain>
           SidebarX(
             controller: _controller,
             items: _items,
-            theme: SidebarXTheme(
-              width: 70,
-              iconTheme: const IconThemeData(),
-              selectedIconTheme: const IconThemeData(
-                size: 42,
-                color: Colors.blue,
-              ),
-              selectedItemDecoration: BoxDecoration(
-                color: Colors.amber,
-                border: Border.all(
-                  width: 0.5,
-                ),
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            extendedTheme: SidebarXTheme(
-              width: 250,
-              hoverColor: Colors.orange.shade200,
-              itemPadding: const EdgeInsets.all(4),
-              selectedItemTextPadding:
-                  const EdgeInsets.symmetric(horizontal: 12),
-              selectedTextStyle: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-              selectedItemDecoration: BoxDecoration(
-                color: Colors.amber,
-                border: Border.all(
-                  width: 0.5,
-                ),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              decoration: BoxDecoration(
-                color: Colors.blue.shade200,
-                border: Border.all(
-                  color: Colors.grey,
-                  width: 0.5,
-                ),
-                borderRadius: BorderRadius.circular(8),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.shade300,
-                    offset: const Offset(3, 3),
-                    blurStyle: BlurStyle.outer,
-                    blurRadius: 2,
-                    spreadRadius: 2,
-                  ),
-                ],
-              ),
-            ),
+            theme: sidebarXthemeRegularDark,
+            extendedTheme: sidebarXthemeExtendedDark,
             headerBuilder: (context, extended) {
               return Consumer<PxAppUsers>(
                 builder: (context, u, c) {
@@ -194,67 +149,78 @@ class _ControlPanelMainState extends State<ControlPanelMain>
                       textAlign: TextAlign.center,
                     );
                   }
-                  return Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      _controller.extended
-                          ? ListTile(
-                              title: const Text("User"),
-                              subtitle: Text(
-                                u.loggedInAppUser!.email == ''
-                                    ? "Anonymous User"
-                                    : u.loggedInAppUser!.email,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
+                  return Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        _controller.extended
+                            ? ListTile(
+                                title: const Text(
+                                  "User",
+                                  style: TextStyle(
+                                    color: Colors.white60,
+                                  ),
+                                ),
+                                subtitle: Text(
+                                  u.loggedInAppUser!.email == ''
+                                      ? "Anonymous User"
+                                      : u.loggedInAppUser!.email,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              )
+                            : const CircleAvatar(
+                                child: Icon(
+                                  Icons.person,
+                                  size: 32,
                                 ),
                               ),
-                            )
-                          : const Icon(
-                              Icons.person,
-                              size: 42,
-                            ),
-                      _controller.extended
-                          ? ListTile(
-                              title: const Text("Role"),
-                              subtitle: Text(
-                                u.loggedInAppUser!.role.name,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
+                        const SizedBox(height: 10),
+                        _controller.extended
+                            ? ListTile(
+                                title: const Text(
+                                  "Role",
+                                  style: TextStyle(
+                                    color: Colors.white60,
+                                  ),
+                                ),
+                                subtitle: Text(
+                                  u.loggedInAppUser!.role.name,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              )
+                            : const CircleAvatar(
+                                child: Icon(
+                                  Icons.roller_shades,
+                                  size: 23,
                                 ),
                               ),
-                            )
-                          : const Icon(
-                              Icons.roller_shades,
-                              size: 42,
-                            ),
-                    ],
+                      ],
+                    ),
                   );
                 },
               );
             },
-            headerDivider: Divider(
-              height: 4,
-              color: Colors.indigo.shade900,
-            ),
-            footerDivider: Divider(
-              height: 4,
-              color: Colors.indigo.shade900,
-            ),
-            separatorBuilder: (context, index) {
-              return const Divider();
-            },
+            footerDivider: divider,
             footerItems: footerItems(),
           ),
           Expanded(
             child: AnimatedBuilder(
               animation: _animationController,
               child: _pageBuilderPages
-                  .selectorBuilder(context
-                      .read<PxAppUsers>()
-                      .loggedInAppUser!
-                      .role)[_controller.selectedIndex]
+                  .selectorBuilder(
+                    context.read<PxAppUsers>().loggedInAppUser!.role,
+                    context.read<PxAppUsers>().loggedInAppUser!.otherRoles,
+                  )[_controller.selectedIndex]
                   .page,
               builder: (context, child) {
                 return FadeTransition(

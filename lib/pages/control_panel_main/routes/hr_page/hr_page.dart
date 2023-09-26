@@ -1,40 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:single_vendor_admin_panel/providers/px_localization.dart';
-import 'package:single_vendor_admin_panel/routes/routes.dart';
+import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/hr_page/components/hr_sidebar.dart';
+import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/hr_page/hr_pages_builder.dart';
+import 'package:single_vendor_admin_panel/providers/hr/px_hr_navigation.dart';
 
-class HRPage extends StatelessWidget {
+class HRPage extends StatefulWidget {
   const HRPage({super.key});
 
   @override
+  State<HRPage> createState() => _HRPageState();
+}
+
+class _HRPageState extends State<HRPage> {
+  @override
   Widget build(BuildContext context) {
-    //TODO: create user
-    //TODO: assign user roles
+    //todo: create user
+    //todo: assign user roles && delete / deactivate users
     //TODO: see user logs signin/signout times mainly ??
+    //TODO: see customer user logs && separate customer users from app users
     //TODO: set salary calculations //!(deferred)
-    //TODO: delete / deactivate users
     return Scaffold(
-      backgroundColor: Colors.green,
       body: Card(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  GoRouter.of(context).goNamed(
-                    PageDir.create_app_user_page.name,
-                    pathParameters: {
-                      'lang':
-                          context.read<PxLocalization>().locale.languageCode,
-                    },
-                  );
-                },
-                child: const Text("Create New User"),
-              ),
-            ),
-          ],
+        child: ChangeNotifierProvider(
+          create: (context) => PxHRnavigation(),
+          builder: (context, child) {
+            return Row(
+              children: [
+                const HrPageSideBar(),
+                Consumer<PxHRnavigation>(
+                  builder: (context, n, c) {
+                    return Expanded(
+                      child: HRPageReference.values[n.index].page,
+                    );
+                  },
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
