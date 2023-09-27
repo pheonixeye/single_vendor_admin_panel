@@ -105,3 +105,36 @@ final sidebarXthemeRegularLight = SidebarXTheme(
   ),
   hoverColor: Colors.orange.shade200,
 );
+
+final mainTheme = ThemeData(
+  primaryColor: primaryColor,
+  scaffoldBackgroundColor: scaffoldBackgroundColor,
+  canvasColor: canvasColor,
+  textTheme: const TextTheme(
+    headlineSmall: TextStyle(
+      color: Colors.white,
+      fontSize: 46,
+      fontWeight: FontWeight.w800,
+    ),
+  ),
+  useMaterial3: true,
+  cardTheme: CardTheme(
+    elevation: 10,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(8),
+    ),
+  ),
+  inputDecorationTheme: InputDecorationTheme(
+    border: OutlineInputBorder(
+      borderSide: const BorderSide(
+        color: Colors.black,
+        width: 2.0,
+      ),
+      borderRadius: BorderRadius.circular(8),
+      gapPadding: 8.0,
+    ),
+    filled: true,
+    fillColor: Colors.white,
+    hoverColor: Colors.amber,
+  ),
+);

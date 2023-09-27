@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sidebarx/sidebarx.dart';
 import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/hr_page/hr_pages_builder.dart';
 import 'package:single_vendor_admin_panel/providers/hr/px_hr_navigation.dart';
-import 'package:single_vendor_admin_panel/theme/sidebar_x_theme.dart';
+import 'package:single_vendor_admin_panel/theme/theme.dart';
 
 class HrPageSideBar extends StatefulWidget {
   const HrPageSideBar({super.key});

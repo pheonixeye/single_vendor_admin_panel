@@ -1,6 +1,7 @@
 import 'package:appwrite/models.dart';
 import 'package:flutter/material.dart';
 import 'package:single_vendor_admin_panel/api/appusers/hx_appusers.dart';
+import 'package:single_vendor_admin_panel/models/app_user_log_model.dart';
 import 'package:single_vendor_admin_panel/models/app_user_model.dart';
 import 'package:uuid/uuid.dart';
 
@@ -21,6 +22,9 @@ class PxAppUsers extends ChangeNotifier {
 
   User? _loggedInUser;
   User? get loggedInUser => _loggedInUser;
+
+  AppUserLogData? _logData;
+  AppUserLogData? get logData => _logData;
 
   final HxAppUsers usersService;
 
@@ -150,5 +154,24 @@ class PxAppUsers extends ChangeNotifier {
     } catch (e) {
       rethrow;
     }
+  }
+
+  Future<void> fetchAppUserLogData() async {
+    try {
+      final appUserLogData =
+          await usersService.fetchUserLogs(_forLogAppUser!.id!);
+      _logData = appUserLogData;
+      notifyListeners();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  AppUser? _forLogAppUser;
+  AppUser? get forLogAppUser => _forLogAppUser;
+
+  void setForLogAppUser(AppUser? newUser) {
+    _forLogAppUser = newUser;
+    notifyListeners();
   }
 }

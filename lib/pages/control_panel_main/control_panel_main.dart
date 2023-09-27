@@ -11,7 +11,7 @@ import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/base_p
 import 'package:single_vendor_admin_panel/providers/auth/px_app_users.dart';
 import 'package:single_vendor_admin_panel/providers/px_localization.dart';
 import 'package:single_vendor_admin_panel/routes/routes.dart';
-import 'package:single_vendor_admin_panel/theme/sidebar_x_theme.dart';
+import 'package:single_vendor_admin_panel/theme/theme.dart';
 
 class ControlPanelMain extends StatefulWidget {
   const ControlPanelMain({super.key});

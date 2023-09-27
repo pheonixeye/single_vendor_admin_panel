@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:single_vendor_admin_panel/theme/sidebar_x_theme.dart';
 
 class MainAppbar extends StatelessWidget implements PreferredSizeWidget {
   const MainAppbar({
@@ -20,11 +19,16 @@ class MainAppbar extends StatelessWidget implements PreferredSizeWidget {
       automaticallyImplyLeading: true,
       centerTitle: true,
       flexibleSpace: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: <Color>[Colors.purple.shade100, Colors.white]),
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: <Color>[
+              //TODO: save this color
+              Color(0xffEBE4F2),
+              Colors.white,
+            ],
+          ),
         ),
       ),
     );

@@ -2,6 +2,7 @@ import 'package:appwrite/appwrite.dart' as client_sdk;
 import 'package:dart_appwrite/dart_appwrite.dart' as server_sdk;
 import 'package:appwrite/models.dart';
 import 'package:single_vendor_admin_panel/api/constants/servers.dart';
+import 'package:single_vendor_admin_panel/models/app_user_log_model.dart';
 import 'package:single_vendor_admin_panel/models/app_user_model.dart';
 
 enum UserUpdate {
@@ -194,6 +195,19 @@ class HxAppUsers {
       );
 
       return appUser;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<AppUserLogData?> fetchUserLogs(String userId) async {
+    final server_sdk.Users users = server_sdk.Users(server.serverClient);
+
+    try {
+      final logs = await users.listLogs(
+        userId: userId,
+      );
+      return AppUserLogData.fromJson(logs.toMap());
     } catch (e) {
       rethrow;
     }

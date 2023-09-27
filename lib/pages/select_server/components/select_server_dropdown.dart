@@ -12,25 +12,30 @@ class SelectServerDropdown extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Card(
         elevation: 10,
-        child: DropdownButton<Server>(
-          hint: const Text("Select Server..."),
-          isExpanded: true,
-          alignment: Alignment.center,
-          items: Servers.serverList.map<DropdownMenuItem<Server>>((e) {
-            return DropdownMenuItem<Server>(
-              value: e,
-              alignment: Alignment.center,
-              child: Text(
-                e.name,
-                textAlign: TextAlign.center,
-              ),
-            );
-          }).toList(),
-          onChanged: (value) {
-            context.read<PxServerStatus>().selectServerAddress(value);
-            context.read<PxServerStatus>().nullifyServerStatus();
-          },
-          value: context.watch<PxServerStatus>().server,
+        child: Theme(
+          data: Theme.of(context).copyWith(
+            canvasColor: Colors.white70,
+          ),
+          child: DropdownButton<Server>(
+            hint: const Text("Select Server..."),
+            isExpanded: true,
+            alignment: Alignment.center,
+            items: Servers.serverList.map<DropdownMenuItem<Server>>((e) {
+              return DropdownMenuItem<Server>(
+                value: e,
+                alignment: Alignment.center,
+                child: Text(
+                  e.name,
+                  textAlign: TextAlign.center,
+                ),
+              );
+            }).toList(),
+            onChanged: (value) {
+              context.read<PxServerStatus>().selectServerAddress(value);
+              context.read<PxServerStatus>().nullifyServerStatus();
+            },
+            value: context.watch<PxServerStatus>().server,
+          ),
         ),
       ),
     );
