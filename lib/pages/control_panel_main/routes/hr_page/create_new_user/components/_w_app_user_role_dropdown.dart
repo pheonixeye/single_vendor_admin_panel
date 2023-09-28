@@ -21,7 +21,7 @@ class AppUserRoleSelectorDropdown extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Theme(
                 data: Theme.of(context).copyWith(
-                  canvasColor: Colors.orange.shade100,
+                  canvasColor: Colors.purple.shade100,
                 ),
                 child: DropdownButton<UserRole>(
                   underline: const SizedBox(),

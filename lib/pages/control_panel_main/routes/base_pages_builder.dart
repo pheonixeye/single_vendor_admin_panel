@@ -3,17 +3,17 @@ import 'package:single_vendor_admin_panel/models/app_user_model.dart';
 import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/admin_panel_page/admin_panel_page.dart';
 import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/analyst_page/analyst_page.dart';
 // import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/base_page/base_page.dart';
-import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/hr_page/hr_page.dart';
+import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/hr_page/hr_main.dart';
 import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/inventory_page/inventory_page.dart';
-import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/products_page.dart';
+import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/products_main.dart';
 import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/sales_page/sales_page.dart';
 import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/settings_page/settings_page.dart';
 
 export 'package:single_vendor_admin_panel/pages/control_panel_main/routes/admin_panel_page/admin_panel_page.dart';
 export 'package:single_vendor_admin_panel/pages/control_panel_main/routes/analyst_page/analyst_page.dart';
 export 'package:single_vendor_admin_panel/pages/control_panel_main/routes/base_page/base_page.dart';
-export 'package:single_vendor_admin_panel/pages/control_panel_main/routes/hr_page/hr_page.dart';
-export 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/products_page.dart';
+export 'package:single_vendor_admin_panel/pages/control_panel_main/routes/hr_page/hr_main.dart';
+export 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/products_main.dart';
 export 'package:single_vendor_admin_panel/pages/control_panel_main/routes/settings_page/settings_page.dart';
 
 enum PageReference {

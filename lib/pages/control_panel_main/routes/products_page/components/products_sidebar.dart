@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sidebarx/sidebarx.dart';
-import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/hr_page/hr_pages_builder.dart';
-import 'package:single_vendor_admin_panel/providers/hr/px_hr_navigation.dart';
+import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/product_page_builder.dart';
+import 'package:single_vendor_admin_panel/providers/products/px_products_nav.dart';
 import 'package:single_vendor_admin_panel/theme/theme.dart';
 
-class HrPageSideBar extends StatefulWidget {
-  const HrPageSideBar({super.key});
+class ProductsSidebar extends StatefulWidget {
+  const ProductsSidebar({super.key});
 
   @override
-  State<HrPageSideBar> createState() => _HrPageSideBarState();
+  State<ProductsSidebar> createState() => _ProductsSidebarState();
 }
 
-class _HrPageSideBarState extends State<HrPageSideBar> {
+class _ProductsSidebarState extends State<ProductsSidebar> {
   late final SidebarXController _xController;
 
   @override
@@ -36,7 +36,7 @@ class _HrPageSideBarState extends State<HrPageSideBar> {
           padding: const EdgeInsets.all(16.0),
           child: _xController.extended
               ? const Text(
-                  'Human Resources',
+                  'Products Panel',
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -46,14 +46,14 @@ class _HrPageSideBarState extends State<HrPageSideBar> {
                 )
               : const CircleAvatar(
                   child: Icon(
-                    Icons.person_2,
+                    Icons.production_quantity_limits,
                     size: 32,
                   ),
                 ),
         );
       },
       items: [
-        ...HRPageReference.values.map((e) {
+        ...ProductsPageReference.values.map((e) {
           return SidebarXItem(
             iconWidget: Tooltip(
               message: e.name,
@@ -61,9 +61,9 @@ class _HrPageSideBarState extends State<HrPageSideBar> {
             ),
             label: e.name,
             onTap: () {
-              final index = HRPageReference.values.indexOf(e);
+              final index = ProductsPageReference.values.indexOf(e);
               _xController.selectIndex(index);
-              context.read<PxHRnavigation>().navigate(index);
+              context.read<PxProductsNavigation>().navigate(index);
             },
           );
         }).toList(),

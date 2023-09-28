@@ -31,7 +31,13 @@ class _ControlPanelMainState extends State<ControlPanelMain>
   List<SidebarXItem> footerItems() => [
         SidebarXItem(
           label: "Log Out",
-          icon: Icons.logout,
+          // icon: Icons.logout,
+          iconWidget: const Tooltip(
+            message: "Log Out",
+            child: Icon(
+              Icons.logout,
+            ),
+          ),
           onTap: () async {
             try {
               await EasyLoading.show(status: "LOADING...");
@@ -56,7 +62,12 @@ class _ControlPanelMainState extends State<ControlPanelMain>
         ),
         SidebarXItem(
           label: "About",
-          icon: Icons.info,
+          iconWidget: const Tooltip(
+            message: "About",
+            child: Icon(
+              Icons.info,
+            ),
+          ),
           onTap: () async {
             await showMainDialog(context);
             setState(() {
@@ -78,7 +89,10 @@ class _ControlPanelMainState extends State<ControlPanelMain>
             .map((e) {
           return SidebarXItem(
             label: e.name,
-            icon: e.icon,
+            iconWidget: Tooltip(
+              message: e.name,
+              child: Icon(e.icon),
+            ),
             onTap: () {
               setState(() {
                 if (!_animationController.isCompleted) {

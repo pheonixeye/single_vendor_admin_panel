@@ -71,8 +71,9 @@ class _AppUserTextFieldState extends State<AppUserTextField> {
                             _isHidden = !_isHidden;
                           });
                         },
-                        icon: const Icon(
+                        icon: Icon(
                           Icons.password,
+                          color: Theme.of(context).primaryColor,
                         ),
                       ),
                   },

@@ -137,4 +137,7 @@ final mainTheme = ThemeData(
     fillColor: Colors.white,
     hoverColor: Colors.amber,
   ),
+  iconTheme: IconThemeData(
+    color: Colors.white.withOpacity(0.7),
+  ),
 );

@@ -14,7 +14,7 @@ class SelectServerDropdown extends StatelessWidget {
         elevation: 10,
         child: Theme(
           data: Theme.of(context).copyWith(
-            canvasColor: Colors.white70,
+            canvasColor: Colors.purple.shade100,
           ),
           child: DropdownButton<Server>(
             hint: const Text("Select Server..."),

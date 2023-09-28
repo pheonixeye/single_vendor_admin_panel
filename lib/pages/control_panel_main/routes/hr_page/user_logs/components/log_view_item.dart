@@ -14,20 +14,52 @@ class LogViewItem extends StatelessWidget {
           leading: CircleAvatar(
             child: Text((index + 1).toString()),
           ),
-          title: Text(log.event),
+          title: Wrap(
+            spacing: 10,
+            runSpacing: 10,
+            children: [
+              const Text('Event:'),
+              _boldy(log.event),
+            ],
+          ),
           subtitle: Wrap(
             spacing: 10,
             runSpacing: 10,
             children: [
-              Text(log.userId),
-              Text(log.userEmail),
-              Text(log.clientCode),
-              Text(log.userName),
-              Text(log.time),
+              const Text('User Id:'),
+              _boldy(log.userId),
+              const Text('Username:'),
+              _boldy(log.userName),
+              const Text('User Email:'),
+              _boldy(log.userEmail),
+              const Text('Time:'),
+              _boldy(log.time),
             ],
           ),
         ),
       ),
     );
   }
+}
+
+SelectableText _boldy(String data) {
+  Color? _color;
+  switch (data) {
+    case "session.create":
+      _color = Colors.green;
+      break;
+    case "session.delete":
+      _color = Colors.red;
+      break;
+    default:
+      _color = null;
+      break;
+  }
+  return SelectableText(
+    data,
+    style: TextStyle(
+      fontWeight: FontWeight.bold,
+      color: _color,
+    ),
+  );
 }

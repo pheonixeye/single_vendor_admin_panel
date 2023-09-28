@@ -29,7 +29,6 @@ class _UserLogsPageState extends State<UserLogsPage> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.pink,
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Card(
@@ -74,7 +73,7 @@ class _UserLogsPageState extends State<UserLogsPage> with AfterLayoutMixin {
                 },
                 optionsBuilder: (TextEditingValue textEditingValue) {
                   if (textEditingValue.text == '') {
-                    return const Iterable<AppUser>.empty();
+                    return context.read<PxAppUsers>().appUserList!.users;
                   }
                   return context
                       .read<PxAppUsers>()

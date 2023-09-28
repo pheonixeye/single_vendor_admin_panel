@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:single_vendor_admin_panel/api/appusers/hx_products.dart';
+import 'package:single_vendor_admin_panel/api/products_api/hx_product_unit.dart';
 import 'package:single_vendor_admin_panel/providers/px_localization.dart';
 import 'package:single_vendor_admin_panel/providers/px_server_status_px.dart';
 
@@ -27,14 +27,14 @@ class _SettingsPageState extends State<SettingsPage> {
     }
   }
 
-  late final HxProducts productsService;
+  late final HxProductUnit productsService;
 
   String? _products;
 
   @override
   void initState() {
     productsService =
-        HxProducts(server: context.read<PxServerStatus>().server!);
+        HxProductUnit(server: context.read<PxServerStatus>().server!);
     super.initState();
   }
 
