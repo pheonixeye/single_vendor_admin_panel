@@ -19,7 +19,7 @@ class LogViewItem extends StatelessWidget {
             runSpacing: 10,
             children: [
               const Text('Event:'),
-              _boldy(log.event),
+              _boldyEvent(log.event),
             ],
           ),
           subtitle: Wrap(
@@ -42,24 +42,55 @@ class LogViewItem extends StatelessWidget {
   }
 }
 
-SelectableText _boldy(String data) {
-  Color? _color;
-  switch (data) {
-    case "session.create":
-      _color = Colors.green;
-      break;
-    case "session.delete":
-      _color = Colors.red;
-      break;
-    default:
-      _color = null;
-      break;
+SelectableText _boldyEvent(String data) {
+  Color? color1;
+  Color? color2;
+
+  if (data.contains("session")) {
+    color2 = Colors.deepPurple;
+    if (data.contains("create")) {
+      color1 = Colors.green;
+    } else if (data.contains("delete")) {
+      color1 = Colors.red;
+    }
   }
+  if (data.contains("document")) {
+    color2 = Colors.teal;
+    if (data.contains("create")) {
+      color1 = Colors.blue;
+    } else if (data.contains("delete")) {
+      color1 = Colors.red;
+    } else if (data.contains("update")) {
+      color1 = Colors.orange;
+    }
+  }
+  final List<String> items = data.split('.');
+  return SelectableText.rich(
+    TextSpan(
+      text: items[0],
+      style: TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 16,
+        color: color2,
+      ),
+      children: [
+        const TextSpan(text: "."),
+        TextSpan(
+          text: items[1],
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 14,
+            color: color1,
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+_boldy(String data) {
   return SelectableText(
     data,
-    style: TextStyle(
-      fontWeight: FontWeight.bold,
-      color: _color,
-    ),
+    style: const TextStyle(fontWeight: FontWeight.bold),
   );
 }

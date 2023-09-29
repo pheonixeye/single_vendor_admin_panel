@@ -145,6 +145,7 @@ class AppUserList extends Equatable {
   }
 
   AppUserList update(AppUser newUser, [bool toRemove = false]) {
+    // ignore: no_leading_underscores_for_local_identifiers
     List<AppUser> _new = [];
     users.map((e) {
       if (toRemove) {

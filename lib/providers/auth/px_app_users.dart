@@ -44,7 +44,7 @@ class PxAppUsers extends ChangeNotifier {
       otherRoles: otherRoles,
     );
     notifyListeners();
-    print(_appUser.toString());
+    // print(_appUser.toString());
   }
 
   Future<void> createAppUser() async {
@@ -74,7 +74,7 @@ class PxAppUsers extends ChangeNotifier {
     try {
       var usr = await usersService.getLoggedInUser();
       _loggedInUser = usr;
-      print(_loggedInUser?.toMap().toString());
+      // print(_loggedInUser?.toMap().toString());
       _loggedInAppUser = _loggedInAppUser?.copyWith(
         email: _loggedInUser?.email,
         password: _loggedInUser?.password,

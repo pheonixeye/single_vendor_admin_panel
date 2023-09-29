@@ -5,10 +5,21 @@ class EditProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Colors.amber,
-      body: Center(
-        child: Text('Edit Product'),
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListView(
+              children: const [
+                ListTile(
+                  title: Text('Edit Product'),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

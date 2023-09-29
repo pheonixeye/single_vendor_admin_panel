@@ -21,7 +21,7 @@ class CreateNewAppUser extends StatelessWidget {
             child: ListView(
               children: [
                 const ListTile(
-                  title: Text("Create New App User"),
+                  title: Text("Create New User"),
                 ),
                 const AppUserTextField(
                   usage: Usage.name,

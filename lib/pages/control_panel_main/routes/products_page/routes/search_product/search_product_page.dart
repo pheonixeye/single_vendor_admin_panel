@@ -5,10 +5,21 @@ class SearchProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Colors.teal,
-      body: Center(
-        child: Text('Search Product'),
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListView(
+              children: const [
+                ListTile(
+                  title: Text('Search Product'),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

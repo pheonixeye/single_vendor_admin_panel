@@ -32,115 +32,121 @@ class _UserLogsPageState extends State<UserLogsPage> with AfterLayoutMixin {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Card(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              RawAutocomplete<AppUser>(
-                displayStringForOption: (option) {
-                  return option.email;
-                },
-                optionsViewBuilder: (
-                  BuildContext context,
-                  void Function(AppUser) onSelected,
-                  Iterable<AppUser> options,
-                ) {
-                  return Material(
-                    child: SizedBox(
-                      height: 200,
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: options.map((opt) {
-                            return InkWell(
-                              onTap: () {
-                                onSelected(opt);
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.only(right: 60),
-                                child: Card(
-                                  child: Container(
-                                    width: double.infinity,
-                                    padding: const EdgeInsets.all(10),
-                                    child: Text(opt.email),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const ListTile(
+                  title: Text('User Logs :'),
+                ),
+                RawAutocomplete<AppUser>(
+                  displayStringForOption: (option) {
+                    return option.email;
+                  },
+                  optionsViewBuilder: (
+                    BuildContext context,
+                    void Function(AppUser) onSelected,
+                    Iterable<AppUser> options,
+                  ) {
+                    return Material(
+                      child: SizedBox(
+                        height: 200,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: options.map((opt) {
+                              return InkWell(
+                                onTap: () {
+                                  onSelected(opt);
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.only(right: 60),
+                                  child: Card(
+                                    child: Container(
+                                      width: double.infinity,
+                                      padding: const EdgeInsets.all(10),
+                                      child: Text(opt.email),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-                optionsBuilder: (TextEditingValue textEditingValue) {
-                  if (textEditingValue.text == '') {
-                    return context.read<PxAppUsers>().appUserList!.users;
-                  }
-                  return context
-                      .read<PxAppUsers>()
-                      .appUserList!
-                      .users
-                      .where((element) {
-                    return element.email
-                        .contains(textEditingValue.text.toLowerCase());
-                  });
-                },
-                onSelected: (AppUser selection) async {
-                  context.read<PxAppUsers>().setForLogAppUser(selection);
-                  await _fetchLogs(context, selection);
-                  if (mounted) {
-                    context.read<PxAppUsers>().setForLogAppUser(null);
-                  }
-                },
-                fieldViewBuilder: (BuildContext context,
-                    TextEditingController textEditingController,
-                    FocusNode focusNode,
-                    VoidCallback onFieldSubmitted) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextField(
-                          onSubmitted: (val) {
-                            onFieldSubmitted();
-                          },
-                          controller: textEditingController,
-                          focusNode: focusNode,
-                          decoration: const InputDecoration(
-                            labelText: "Search by E-mail or Phone Number...",
+                              );
+                            }).toList(),
                           ),
                         ),
                       ),
-                    ),
-                  );
-                },
-              ),
-              Expanded(
-                child: Consumer<PxAppUsers>(
-                  builder: (context, l, c) {
-                    while (l.logData == null) {
-                      return const Center(
-                        child: Text("No User Selected..."),
-                      );
+                    );
+                  },
+                  optionsBuilder: (TextEditingValue textEditingValue) {
+                    if (textEditingValue.text == '') {
+                      return context.read<PxAppUsers>().appUserList!.users;
                     }
-                    return Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ListView.builder(
-                          itemCount: l.logData?.logs.length,
-                          itemBuilder: (context, index) {
-                            return LogViewItem(
-                              index: index,
-                              log: l.logData!.logs[index],
-                            );
-                          },
+                    return context
+                        .read<PxAppUsers>()
+                        .appUserList!
+                        .users
+                        .where((element) {
+                      return element.email
+                          .contains(textEditingValue.text.toLowerCase());
+                    });
+                  },
+                  onSelected: (AppUser selection) async {
+                    context.read<PxAppUsers>().setForLogAppUser(selection);
+                    await _fetchLogs(context, selection);
+                    if (mounted) {
+                      context.read<PxAppUsers>().setForLogAppUser(null);
+                    }
+                  },
+                  fieldViewBuilder: (BuildContext context,
+                      TextEditingController textEditingController,
+                      FocusNode focusNode,
+                      VoidCallback onFieldSubmitted) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextField(
+                            onSubmitted: (val) {
+                              onFieldSubmitted();
+                            },
+                            controller: textEditingController,
+                            focusNode: focusNode,
+                            decoration: const InputDecoration(
+                              labelText: "Search by E-mail or Phone Number...",
+                            ),
+                          ),
                         ),
                       ),
                     );
                   },
                 ),
-              ),
-            ],
+                Expanded(
+                  child: Consumer<PxAppUsers>(
+                    builder: (context, l, c) {
+                      while (l.logData == null) {
+                        return const Center(
+                          child: Text("No User Selected..."),
+                        );
+                      }
+                      return Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ListView.builder(
+                            itemCount: l.logData?.logs.length,
+                            itemBuilder: (context, index) {
+                              return LogViewItem(
+                                index: index,
+                                log: l.logData!.logs[index],
+                              );
+                            },
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

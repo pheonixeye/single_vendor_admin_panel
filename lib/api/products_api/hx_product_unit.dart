@@ -8,6 +8,7 @@ class HxProductUnit {
   final Server server;
 
   Future<String?> fetchProducts() async {
+    //TODO:delete from here
     try {
       final db = client_sdk.Databases(server.clientClient);
       final products = await db.listDocuments(
@@ -62,6 +63,38 @@ class HxProductUnit {
         documentId: unitId,
       );
       return doc;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<ProductUnit> updateProductUnit(ProductUnit update) async {
+    try {
+      final db = client_sdk.Databases(server.clientClient);
+      final doc = await db.updateDocument(
+        databaseId: CREDS.DATABASE_ID,
+        collectionId: CREDS.PRODUCT_UNIT_COLLECTION_ID,
+        documentId: update.unitId,
+        data: update.toJson(),
+      );
+      final unit = ProductUnit.fromJson(doc.data);
+
+      return unit;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<ProductUnit> getProductUnit(String unitId) async {
+    try {
+      final db = client_sdk.Databases(server.clientClient);
+      final doc = await db.updateDocument(
+        databaseId: CREDS.DATABASE_ID,
+        collectionId: CREDS.PRODUCT_UNIT_COLLECTION_ID,
+        documentId: unitId,
+      );
+      final unit = ProductUnit.fromJson(doc.data);
+      return unit;
     } catch (e) {
       rethrow;
     }

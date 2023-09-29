@@ -9,7 +9,7 @@ SnackBar iInfoSnackbar(String message, BuildContext context, [Color? color]) {
     behavior: SnackBarBehavior.fixed,
     duration: color == Colors.red
         ? const Duration(seconds: 15)
-        : const Duration(seconds: 4),
+        : const Duration(seconds: 2),
     showCloseIcon: true,
     content: Padding(
       padding: const EdgeInsets.all(8.0),
