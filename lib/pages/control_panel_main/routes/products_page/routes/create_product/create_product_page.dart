@@ -12,9 +12,10 @@ class CreateProductPage extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: ListView(
-              children: const [
+              children: [
                 ListTile(
-                  title: Text('Create Product'),
+                  title: const Text('Create Product'),
+                  tileColor: Colors.amber.shade200,
                 ),
               ],
             ),

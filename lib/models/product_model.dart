@@ -26,20 +26,74 @@ class Product {
   });
 }
 
-class ProductCategory {
+class ProductCategory extends Equatable {
   final String nameEn;
   final String nameAr;
   final String descriptionEn;
   final String descriptionAr;
   final String categoryId;
 
-  ProductCategory({
+  const ProductCategory({
     required this.nameEn,
     required this.nameAr,
     required this.descriptionEn,
     required this.descriptionAr,
     required this.categoryId,
   });
+
+  factory ProductCategory.fromJson(Map<String, dynamic> json) {
+    return ProductCategory(
+      nameEn: json['name_en'],
+      nameAr: json['name_ar'],
+      descriptionEn: json['description_en'],
+      descriptionAr: json['description_ar'],
+      categoryId: json['category_id'],
+    );
+  }
+
+  factory ProductCategory.initial() {
+    return const ProductCategory(
+      nameEn: '',
+      nameAr: '',
+      descriptionEn: '',
+      descriptionAr: '',
+      categoryId: '',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name_en': nameEn,
+      'name_ar': nameAr,
+      'description_en': descriptionEn,
+      'description_ar': descriptionAr,
+      'category_id': categoryId,
+    };
+  }
+
+  ProductCategory copyWith({
+    String? nameEn,
+    String? nameAr,
+    String? descriptionEn,
+    String? descriptionAr,
+    String? categoryId,
+  }) {
+    return ProductCategory(
+      nameEn: nameEn ?? this.nameEn,
+      nameAr: nameAr ?? this.nameAr,
+      descriptionEn: descriptionEn ?? this.descriptionEn,
+      descriptionAr: descriptionAr ?? this.descriptionAr,
+      categoryId: categoryId ?? this.categoryId,
+    );
+  }
+
+  static List<ProductCategory> list(List<Map<String, dynamic>> list) {
+    return list.map((e) => ProductCategory.fromJson(e)).toList();
+  }
+
+  @override
+  List<Object?> get props =>
+      [nameEn, nameAr, descriptionEn, descriptionAr, categoryId];
 }
 
 class ProductFeature {

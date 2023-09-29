@@ -26,8 +26,9 @@ class _UnitsPageState extends State<UnitsPage> {
             padding: const EdgeInsets.all(8.0),
             child: ListView(
               children: [
-                const ListTile(
-                  title: Text("Create Product Units"),
+                ListTile(
+                  title: const Text("Create Product Units"),
+                  tileColor: Colors.amber.shade200,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -98,7 +99,13 @@ class _UnitsPageState extends State<UnitsPage> {
                 ),
                 ListTile(
                   title: const Text("Edit Product Units"),
-                  trailing: IconButton.filled(
+                  tileColor: Colors.amber.shade200,
+                  trailing: FloatingActionButton(
+                    mini: true,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    heroTag: 'refresh-unit-items',
                     onPressed: () async {
                       try {
                         await EasyLoading.show(status: "LOADING...");
@@ -123,7 +130,7 @@ class _UnitsPageState extends State<UnitsPage> {
                         }
                       }
                     },
-                    icon: const Icon(Icons.refresh),
+                    child: const Icon(Icons.refresh),
                   ),
                 ),
                 Padding(

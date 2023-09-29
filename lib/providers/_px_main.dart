@@ -1,6 +1,7 @@
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:single_vendor_admin_panel/api/appusers/hx_appusers.dart';
+import 'package:single_vendor_admin_panel/api/products_api/hx_product_category.dart';
 import 'package:single_vendor_admin_panel/api/products_api/hx_product_unit.dart';
 import 'package:single_vendor_admin_panel/providers/auth/px_app_users.dart';
 import 'package:single_vendor_admin_panel/providers/products/px_product_category.dart';
@@ -25,5 +26,11 @@ final List<SingleChildWidget> providers = [
       ),
     ),
   ),
-  ChangeNotifierProvider(create: (context) => PxProductCategory()),
+  ChangeNotifierProvider(
+    create: (context) => PxProductCategory(
+      categoryService: HxProductCategory(
+        server: context.read<PxServerStatus>().server!,
+      ),
+    ),
+  ),
 ];

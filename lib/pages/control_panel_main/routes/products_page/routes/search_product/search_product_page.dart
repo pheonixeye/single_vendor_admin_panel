@@ -12,9 +12,10 @@ class SearchProductPage extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: ListView(
-              children: const [
+              children: [
                 ListTile(
-                  title: Text('Search Product'),
+                  title: const Text('Search Product'),
+                  tileColor: Colors.amber.shade200,
                 ),
               ],
             ),

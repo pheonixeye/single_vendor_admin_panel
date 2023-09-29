@@ -20,8 +20,9 @@ class CreateNewAppUser extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: ListView(
               children: [
-                const ListTile(
-                  title: Text("Create New User"),
+                ListTile(
+                  title: const Text("Create New User"),
+                  tileColor: Colors.amber.shade200,
                 ),
                 const AppUserTextField(
                   usage: Usage.name,

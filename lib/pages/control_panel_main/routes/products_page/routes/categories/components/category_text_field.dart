@@ -23,7 +23,18 @@ class CategoryTextField extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Consumer<PxProductCategory>(
             builder: (context, cat, c) {
+              final _selected = cat.category;
               return TextFormField(
+                initialValue: switch (type) {
+                  FieldType.name => switch (lang) {
+                      FieldLang.en => _selected.nameEn,
+                      FieldLang.ar => _selected.nameAr,
+                    },
+                  FieldType.description => switch (lang) {
+                      FieldLang.en => _selected.descriptionEn,
+                      FieldLang.ar => _selected.descriptionAr,
+                    },
+                },
                 decoration: InputDecoration(
                   hintText:
                       "Enter Category { ${lang.name.toUpperCase()} } { ${type.name.toUpperCase()} }",
@@ -36,16 +47,28 @@ class CategoryTextField extends StatelessWidget {
                     case FieldLang.en:
                       switch (type) {
                         case FieldType.name:
+                          cat.setOrUpdateCategory(
+                            nameEn: value,
+                          );
                           break;
                         case FieldType.description:
+                          cat.setOrUpdateCategory(
+                            descriptionEn: value,
+                          );
                           break;
                       }
                       break;
                     case FieldLang.ar:
                       switch (type) {
                         case FieldType.name:
+                          cat.setOrUpdateCategory(
+                            nameAr: value,
+                          );
                           break;
                         case FieldType.description:
+                          cat.setOrUpdateCategory(
+                            descriptionAr: value,
+                          );
                           break;
                       }
                       break;

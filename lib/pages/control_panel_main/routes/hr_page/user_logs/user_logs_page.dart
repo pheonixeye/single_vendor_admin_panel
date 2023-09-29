@@ -37,8 +37,9 @@ class _UserLogsPageState extends State<UserLogsPage> with AfterLayoutMixin {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const ListTile(
-                  title: Text('User Logs :'),
+                ListTile(
+                  title: const Text('User Logs :'),
+                  tileColor: Colors.amber.shade200,
                 ),
                 RawAutocomplete<AppUser>(
                   displayStringForOption: (option) {

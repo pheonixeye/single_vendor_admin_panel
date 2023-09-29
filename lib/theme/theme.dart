@@ -112,13 +112,20 @@ final mainTheme = ThemeData(
   canvasColor: canvasColor,
   textTheme: const TextTheme(
     headlineSmall: TextStyle(
-      color: Colors.white,
+      color: Colors.black87,
       fontSize: 46,
       fontWeight: FontWeight.w800,
     ),
   ),
+  listTileTheme: ListTileThemeData(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(8),
+    ),
+    tileColor: const Color(0xffFCF7FF),
+  ),
   useMaterial3: true,
   cardTheme: CardTheme(
+    color: const Color(0xffF6EBFF),
     elevation: 10,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(8),

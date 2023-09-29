@@ -21,15 +21,13 @@ class UnitTile extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListTile(
-          tileColor: Theme.of(context).canvasColor,
+          // tileColor: Theme.of(context).canvasColor,
+          titleAlignment: ListTileTitleAlignment.center,
           leading: CircleAvatar(
             backgroundColor: Colors.teal,
             child: Text((index + 1).toString()),
           ),
           hoverColor: Colors.amber,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
           onTap: () async {
             context.read<PxProductUnit>().selectUnit(unit);
             await showDialog(
@@ -41,32 +39,19 @@ class UnitTile extends StatelessWidget {
               context.read<PxProductUnit>().emptyUnit();
             });
           },
-          title: RichText(
-            text: TextSpan(
-              text: "EN: ",
-              children: [
-                TextSpan(
-                  text: unit.nameEn,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
+          title: Wrap(
+            spacing: 10,
+            runSpacing: 10,
+            children: [
+              Text(
+                unit.nameEn,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const Text(" | "),
+              Text(unit.nameAr),
+            ],
           ),
-          subtitle: RichText(
-            text: TextSpan(
-              text: "AR: ",
-              children: [
-                TextSpan(
-                  text: unit.nameAr,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
+
           trailing: FloatingActionButton(
             heroTag: unit.unitId,
             onPressed: () async {

@@ -12,9 +12,10 @@ class EditProductPage extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: ListView(
-              children: const [
+              children: [
                 ListTile(
-                  title: Text('Edit Product'),
+                  title: const Text('Edit Product'),
+                  tileColor: Colors.amber.shade200,
                 ),
               ],
             ),
