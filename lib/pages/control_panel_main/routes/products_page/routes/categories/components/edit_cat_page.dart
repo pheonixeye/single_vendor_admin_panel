@@ -79,7 +79,7 @@ class _EditCategoryPageState extends State<EditCategoryPage>
                                   ),
                                   hoverColor: Colors.amber,
                                   onTap: () async {
-                                    //TODO: edit category
+                                    //todo: edit category
                                     context
                                         .read<PxProductCategory>()
                                         .selectCategory(list[index]);
