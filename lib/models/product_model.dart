@@ -25,6 +25,16 @@ class Product extends Equatable {
     );
   }
 
+  factory Product.initial() {
+    return const Product(
+      productId: '',
+      nameEn: '',
+      nameAr: '',
+      descriptionEn: '',
+      descriptionAr: '',
+    );
+  }
+
   Product coptWith({
     String? productId,
     String? nameEn,
@@ -54,6 +64,10 @@ class Product extends Equatable {
   @override
   List<Object?> get props =>
       [productId, nameEn, nameAr, descriptionEn, descriptionAr];
+
+  static List<Product> productListFromJson(List<Map<String, dynamic>> list) {
+    return list.map((e) => Product.fromJson(e)).toList();
+  }
 }
 
 class ProductCategory extends Equatable {

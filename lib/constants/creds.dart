@@ -10,4 +10,5 @@ class CREDS {
   static const String PRODUCT_UNIT_COLLECTION_ID = '6515a7598bf242e471a0';
   static const String CATEGORY_TO_PRODUCTS_COLLECTION_ID =
       '651b14ef530a70927076';
+  static const String PRODUCT_IMAGES_COLLECTION_ID = '651b16ac12a05cf9c712';
 }
