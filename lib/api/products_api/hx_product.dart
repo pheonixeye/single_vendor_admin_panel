@@ -72,20 +72,21 @@ class HxProduct {
   }
 
   Future<List<Product>?> listProducts() async {
+    //TODO: implement pagination
     try {
       final res = await db.listDocuments(
         databaseId: CREDS.DATABASE_ID,
         collectionId: CREDS.PRODUCT_COLLECTION_ID,
       );
       final products = Product.productListFromJson(
-          res.documents.map((e) => e.toMap()).toList());
+          res.documents.map((e) => e.data).toList());
       return products;
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<List<Product>?> searchProducts(FieldLang lang, String query) async {
+  Future<List<Product>?> searchProducts(String query, FieldLang lang) async {
     try {
       final res = await db.listDocuments(
         databaseId: CREDS.DATABASE_ID,
@@ -100,7 +101,7 @@ class HxProduct {
         },
       );
       final products = Product.productListFromJson(
-          res.documents.map((e) => e.toMap()).toList());
+          res.documents.map((e) => e.data).toList());
       return products;
     } catch (e) {
       rethrow;
