@@ -63,7 +63,9 @@ class ProductTile extends StatelessWidget {
                     context: context,
                     builder: (context) {
                       return const ProductAttributeEditorDialog();
-                    });
+                    }).whenComplete(() {
+                  context.read<PxProduct>().initProduct();
+                });
               },
               trailing: FloatingActionButton(
                 heroTag: product.productId,

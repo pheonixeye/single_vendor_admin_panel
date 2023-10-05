@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class PriceEditComponent extends StatelessWidget {
-  const PriceEditComponent({super.key});
+class FeaturesEditComponent extends StatelessWidget {
+  const FeaturesEditComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +14,8 @@ class PriceEditComponent extends StatelessWidget {
             child: ListView(
               children: [
                 ListTile(
-                  title: const Text('Edit Price'),
-                  tileColor: Colors.blue.shade200,
+                  title: const Text('Edit Features'),
+                  tileColor: Colors.brown.shade200,
                 ),
               ],
             ),

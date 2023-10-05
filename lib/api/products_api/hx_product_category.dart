@@ -43,6 +43,19 @@ class HxProductCategory {
         data: category.toJson(),
       );
       final cat = ProductCategory.fromJson(doc.data);
+
+      ///TODO:create a ref to category in category_to_products collection
+      await db.createDocument(
+        databaseId: CREDS.DATABASE_ID,
+        collectionId: CREDS.CAT_PRODS_COLLECTION_ID,
+        documentId: client_sdk.ID.unique(),
+        data: {
+          'category_id': cat.categoryId,
+          'products': [],
+          'name_en': cat.nameEn,
+          'name_ar': cat.nameAr,
+        },
+      );
       return cat;
     } catch (e) {
       rethrow;

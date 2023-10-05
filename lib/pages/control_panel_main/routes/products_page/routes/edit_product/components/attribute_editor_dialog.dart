@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/routes/edit_product/components/_category_edit.dart';
+import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/routes/edit_product/components/_features_edit.dart';
 import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/routes/edit_product/components/_images_edit.dart';
 import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/routes/edit_product/components/_inventory_edit.dart';
-import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/routes/edit_product/components/_price_edit.dart';
+import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/routes/edit_product/components/price_edit/_price_edit.dart';
 
 class ProductAttributeEditorDialog extends StatefulWidget {
   const ProductAttributeEditorDialog({super.key});
@@ -21,6 +22,7 @@ class _ProductAttributeEditorDialogState
     const PriceEditComponent(),
     const InventoryEditComponent(),
     const ImagesEditComponent(),
+    const FeaturesEditComponent(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -79,6 +81,11 @@ class _ProductAttributeEditorDialogState
                   icon: Icon(Icons.image),
                   label: 'Images',
                   tooltip: 'Images',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.featured_play_list_outlined),
+                  label: 'Features',
+                  tooltip: 'Features',
                 ),
               ],
             ),
