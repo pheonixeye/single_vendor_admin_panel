@@ -180,8 +180,8 @@ class ProductPrice extends Equatable {
   factory ProductPrice.fromJson(Map<String, dynamic> json) {
     return ProductPrice(
       productId: json['product_id'],
-      price: json['price'],
-      discount: json['discount'],
+      price: json['price'].toDouble(),
+      discount: json['discount'].toDouble(),
     );
   }
 

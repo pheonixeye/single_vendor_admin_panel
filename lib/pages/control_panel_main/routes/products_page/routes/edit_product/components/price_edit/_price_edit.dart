@@ -63,8 +63,10 @@ class _PriceEditComponentState extends State<PriceEditComponent> {
                   ),
                   Consumer<PxProductPrice>(
                     builder: (context, p, c) {
-                      _discountController.text = '${p.price.discount}';
-                      _priceController.text = '${p.price.price}';
+                      if (p.price != ProductPrice.initial()) {
+                        _discountController.text = '${p.price.discount}';
+                        _priceController.text = '${p.price.price}';
+                      }
                       return Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -79,6 +81,7 @@ class _PriceEditComponentState extends State<PriceEditComponent> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: TextFormField(
                                   controller: _priceController,
+                                  keyboardType: TextInputType.number,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'Empty Price Fields are not Allowed...';
@@ -99,35 +102,68 @@ class _PriceEditComponentState extends State<PriceEditComponent> {
                               subtitle: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: TextFormField(
+                                  keyboardType: TextInputType.number,
                                   controller: _discountController,
                                 ),
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: ElevatedButton.icon(
-                              onPressed: () async {
-                                if (!formKey.currentState!.validate()) {
-                                  return;
-                                }
-                                p.setOrUpdatePrice(
-                                  productId: context
-                                      .read<PxProduct>()
-                                      .product
-                                      .productId,
-                                  price: double.tryParse(_priceController.text),
-                                  discount:
-                                      double.tryParse(_discountController.text),
-                                );
-                                await shellFunction(context, toExecute: () {
-                                  p.setPrice();
-                                });
-                              },
-                              icon: const Icon(Icons.save),
-                              label: const Text("Update"),
+                          if (p.price.price == 0.0)
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ElevatedButton.icon(
+                                onPressed: () async {
+                                  if (!formKey.currentState!.validate()) {
+                                    return;
+                                  }
+                                  p.setOrUpdatePrice(
+                                    productId: context
+                                        .read<PxProduct>()
+                                        .product
+                                        .productId,
+                                    price:
+                                        double.tryParse(_priceController.text),
+                                    discount: double.tryParse(
+                                        _discountController.text),
+                                  );
+
+                                  await shellFunction(
+                                    context,
+                                    toExecute: p.createPrice,
+                                  );
+                                },
+                                icon: const Icon(Icons.save),
+                                label: const Text("Create"),
+                              ),
                             ),
-                          ),
+                          if (p.price.price != 0.0)
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ElevatedButton.icon(
+                                onPressed: () async {
+                                  if (!formKey.currentState!.validate()) {
+                                    return;
+                                  }
+                                  p.setOrUpdatePrice(
+                                    productId: context
+                                        .read<PxProduct>()
+                                        .product
+                                        .productId,
+                                    price:
+                                        double.tryParse(_priceController.text),
+                                    discount: double.tryParse(
+                                        _discountController.text),
+                                  );
+
+                                  await shellFunction(
+                                    context,
+                                    toExecute: p.updatePrice,
+                                  );
+                                },
+                                icon: const Icon(Icons.save),
+                                label: const Text("Update"),
+                              ),
+                            ),
                         ],
                       );
                     },

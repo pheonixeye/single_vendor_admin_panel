@@ -33,7 +33,7 @@ class PxProductPrice extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<ProductPrice?> setPrice() async {
+  Future<ProductPrice?> createPrice() async {
     try {
       final p = await priceService.createPrice(price);
       _price = p!;
@@ -47,6 +47,19 @@ class PxProductPrice extends ChangeNotifier {
   Future<ProductPrice?> getPrice(String productId) async {
     try {
       final p = await priceService.getPrice(productId);
+      _price = p!;
+      notifyListeners();
+      return _price;
+    } catch (e) {
+      _price = ProductPrice.initial();
+      notifyListeners();
+      return _price;
+    }
+  }
+
+  Future<ProductPrice?> updatePrice() async {
+    try {
+      final p = await priceService.updatePrice(price);
       _price = p!;
       notifyListeners();
       return _price;

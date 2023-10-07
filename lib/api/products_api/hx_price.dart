@@ -52,7 +52,7 @@ class HxPrice {
         collectionId: CREDS.PRODUCT_PRICE_COLLECTION_ID,
         documentId: productId,
       );
-
+      // print(res.data);
       final ProductPrice newPrice = ProductPrice.fromJson(res.data);
 
       return newPrice;

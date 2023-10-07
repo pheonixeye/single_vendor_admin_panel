@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:single_vendor_admin_panel/api/products_api/hx_product.dart';
 import 'package:single_vendor_admin_panel/models/product_model.dart';
 import 'package:single_vendor_admin_panel/providers/products/px_product_list.dart';
+import 'package:single_vendor_admin_panel/providers/products/px_product_price.dart';
 
 class PxProduct extends ChangeNotifier {
   Product _product = Product.initial();
@@ -16,11 +17,13 @@ class PxProduct extends ChangeNotifier {
   void initProduct() {
     _product = Product.initial();
     notifyListeners();
+    context.read<PxProductPrice>().initPrice();
   }
 
   void selectProduct(Product value) {
     _product = value;
     notifyListeners();
+    context.read<PxProductPrice>().getPrice(_product.productId);
   }
 
   void setOrUpdateProduct({

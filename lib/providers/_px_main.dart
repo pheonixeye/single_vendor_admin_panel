@@ -46,18 +46,18 @@ final List<SingleChildWidget> providers = [
     ),
   ),
   ChangeNotifierProvider(
+    create: (context) => PxProductPrice(
+      priceService: HxPrice(
+        server: context.read<PxServerStatus>().server!,
+      ),
+    ),
+  ),
+  ChangeNotifierProvider(
     create: (context) => PxProduct(
       productService: HxProduct(
         server: context.read<PxServerStatus>().server!,
       ),
       context: context,
-    ),
-  ),
-  ChangeNotifierProvider(
-    create: (context) => PxProductPrice(
-      priceService: HxPrice(
-        server: context.read<PxServerStatus>().server!,
-      ),
     ),
   ),
 ];
