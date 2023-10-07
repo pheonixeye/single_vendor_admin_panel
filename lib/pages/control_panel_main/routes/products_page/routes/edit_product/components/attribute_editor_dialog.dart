@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/routes/edit_product/components/_category_edit.dart';
+import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/routes/edit_product/components/category_edit/_category_edit.dart';
 import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/routes/edit_product/components/_features_edit.dart';
 import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/routes/edit_product/components/_images_edit.dart';
 import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/routes/edit_product/components/_inventory_edit.dart';
