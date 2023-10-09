@@ -1,6 +1,7 @@
 import 'package:appwrite/appwrite.dart' as client_sdk;
 import 'package:single_vendor_admin_panel/api/constants/servers.dart';
 import 'package:single_vendor_admin_panel/constants/creds.dart';
+import 'package:single_vendor_admin_panel/models/category_to_product.dart';
 import 'package:single_vendor_admin_panel/models/product_model.dart';
 import 'package:uuid/uuid.dart';
 
@@ -44,17 +45,19 @@ class HxProductCategory {
       );
       final cat = ProductCategory.fromJson(doc.data);
 
-      ///TODO:create a ref to category in category_to_products collection
+      final newCTP = CatToProd(
+        nameEn: cat.nameEn,
+        nameAr: cat.nameAr,
+        categoryId: cat.categoryId,
+        products: const [],
+      );
+
+      ///todo:create a ref to category in category_to_products collection
       await db.createDocument(
         databaseId: CREDS.DATABASE_ID,
         collectionId: CREDS.CAT_PRODS_COLLECTION_ID,
-        documentId: client_sdk.ID.unique(),
-        data: {
-          'category_id': cat.categoryId,
-          'products': [],
-          'name_en': cat.nameEn,
-          'name_ar': cat.nameAr,
-        },
+        documentId: cat.categoryId,
+        data: newCTP.toJson(),
       );
       return cat;
     } catch (e) {

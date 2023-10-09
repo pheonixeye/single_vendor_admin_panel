@@ -23,24 +23,20 @@ class CatToProd extends Equatable {
   }
 
   CatToProd addProduct({required String newProduct}) {
-    final newProds = products;
-    newProds.add(newProduct);
     return CatToProd(
       nameEn: nameEn,
       nameAr: nameAr,
       categoryId: categoryId,
-      products: newProds,
+      products: products..add(newProduct),
     );
   }
 
   CatToProd removeProduct({required String product}) {
-    final newProds = products;
-    newProds.removeWhere((element) => element == product);
     return CatToProd(
       nameEn: nameEn,
       nameAr: nameAr,
       categoryId: categoryId,
-      products: newProds,
+      products: products..removeWhere((element) => element == product),
     );
   }
 

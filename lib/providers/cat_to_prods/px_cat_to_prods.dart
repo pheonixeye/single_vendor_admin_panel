@@ -54,6 +54,7 @@ class PxCategoryToProducts extends ChangeNotifier {
       final cTp = await ctpService.updateCTP(_ctp);
       _ctp = cTp!;
       notifyListeners();
+      await listCTP();
     } catch (e) {
       rethrow;
     }

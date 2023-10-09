@@ -29,17 +29,19 @@ class HxCatToProd {
   }
 
   Future<CatToProd?> updateCTP(CatToProd catToProd) async {
-    final res = await db.updateDocument(
-      databaseId: CREDS.DATABASE_ID,
-      collectionId: CREDS.CAT_PRODS_COLLECTION_ID,
-      documentId: catToProd.categoryId,
-      data: {
-        "products": catToProd.products,
-      },
-    );
+    try {
+      final res = await db.updateDocument(
+        databaseId: CREDS.DATABASE_ID,
+        collectionId: CREDS.CAT_PRODS_COLLECTION_ID,
+        documentId: catToProd.categoryId,
+        data: catToProd.toJson(),
+      );
 
-    final newCtP = CatToProd.fromJson(res.data);
+      final newCtP = CatToProd.fromJson(res.data);
 
-    return newCtP;
+      return newCtP;
+    } catch (e) {
+      rethrow;
+    }
   }
 }
