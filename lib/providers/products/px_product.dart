@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:single_vendor_admin_panel/api/products_api/hx_product.dart';
 import 'package:single_vendor_admin_panel/models/product_model.dart';
+import 'package:single_vendor_admin_panel/providers/products/px_product_features.dart';
 import 'package:single_vendor_admin_panel/providers/products/px_product_list.dart';
 import 'package:single_vendor_admin_panel/providers/products/px_product_price.dart';
 
@@ -23,7 +24,10 @@ class PxProduct extends ChangeNotifier {
   void selectProduct(Product value) {
     _product = value;
     notifyListeners();
+
+    ///should fetch relevant data from prices / features / images / inventory collections on select product
     context.read<PxProductPrice>().getPrice(_product.productId);
+    context.read<PxProductFeatures>().listFeatures(_product.productId);
   }
 
   void setOrUpdateProduct({

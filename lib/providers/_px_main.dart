@@ -5,11 +5,13 @@ import 'package:single_vendor_admin_panel/api/category_to_product/hx_cat_prod.da
 import 'package:single_vendor_admin_panel/api/products_api/hx_price.dart';
 import 'package:single_vendor_admin_panel/api/products_api/hx_product.dart';
 import 'package:single_vendor_admin_panel/api/products_api/hx_product_category.dart';
+import 'package:single_vendor_admin_panel/api/products_api/hx_product_features.dart';
 import 'package:single_vendor_admin_panel/api/products_api/hx_product_unit.dart';
 import 'package:single_vendor_admin_panel/providers/auth/px_app_users.dart';
 import 'package:single_vendor_admin_panel/providers/cat_to_prods/px_cat_to_prods.dart';
 import 'package:single_vendor_admin_panel/providers/products/px_product.dart';
 import 'package:single_vendor_admin_panel/providers/products/px_product_category.dart';
+import 'package:single_vendor_admin_panel/providers/products/px_product_features.dart';
 import 'package:single_vendor_admin_panel/providers/products/px_product_list.dart';
 import 'package:single_vendor_admin_panel/providers/products/px_product_price.dart';
 import 'package:single_vendor_admin_panel/providers/products/px_products_unit.dart';
@@ -65,6 +67,13 @@ final List<SingleChildWidget> providers = [
   ChangeNotifierProvider(
     create: (context) => PxCategoryToProducts(
       ctpService: HxCatToProd(
+        server: context.read<PxServerStatus>().server!,
+      ),
+    ),
+  ),
+  ChangeNotifierProvider(
+    create: (context) => PxProductFeatures(
+      featureService: HxProductFeatures(
         server: context.read<PxServerStatus>().server!,
       ),
     ),

@@ -140,19 +140,25 @@ class ProductCategory extends Equatable {
       [nameEn, nameAr, descriptionEn, descriptionAr, categoryId];
 }
 
+enum SpecialValueType { int, bool, double, none }
+
 class ProductFeature {
+  final String? id;
+  final int sort;
   final String nameEn;
   final String nameAr;
   final String descriptionEn;
   final String descriptionAr;
   final String productId;
   final bool hasSpecialValue;
-  final String? specialValueType;
-  final int? specialValueInt;
-  final double? specialValueDouble;
-  final bool? specialValueBool;
+  final SpecialValueType specialValueType;
+  final int specialValueInt;
+  final double specialValueDouble;
+  final bool specialValueBool;
 
   ProductFeature({
+    required this.id,
+    required this.sort,
     required this.nameEn,
     required this.nameAr,
     required this.descriptionEn,
@@ -164,6 +170,92 @@ class ProductFeature {
     required this.specialValueDouble,
     required this.specialValueBool,
   });
+
+  factory ProductFeature.fromJson(Map<String, dynamic> json) {
+    return ProductFeature(
+      id: json[r'$id'],
+      sort: json['sort'],
+      nameEn: json['name_en'],
+      nameAr: json['name_ar'],
+      descriptionEn: json['description_en'],
+      descriptionAr: json['description_ar'],
+      productId: json['product_id'],
+      hasSpecialValue: json['has_special_value'],
+      specialValueType: json['special_value_type'],
+      specialValueInt: json['special_value_int'],
+      specialValueDouble: json['special_value_double'].toDouble(),
+      specialValueBool: json['special_value_bool'],
+    );
+  }
+
+  factory ProductFeature.initial() {
+    return ProductFeature(
+      id: null,
+      sort: 0,
+      nameEn: '',
+      nameAr: '',
+      descriptionEn: '',
+      descriptionAr: '',
+      productId: '',
+      hasSpecialValue: false,
+      specialValueType: SpecialValueType.none,
+      specialValueInt: 0,
+      specialValueDouble: 0.0,
+      specialValueBool: false,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      r'$id': id,
+      'sort': sort,
+      'name_en': nameEn,
+      'name_ar': nameAr,
+      'description_en': descriptionEn,
+      'description_ar': descriptionAr,
+      'product_id': productId,
+      'has_special_value': hasSpecialValue,
+      'special_value_type': specialValueType,
+      'special_value_int': specialValueInt,
+      'special_value_double': specialValueDouble,
+      'special_value_bool': specialValueBool,
+    };
+  }
+
+  ProductFeature copyWith({
+    String? id,
+    int? sort,
+    String? nameEn,
+    String? nameAr,
+    String? descriptionEn,
+    String? descriptionAr,
+    String? productId,
+    bool? hasSpecialValue,
+    SpecialValueType? specialValueType,
+    int? specialValueInt,
+    double? specialValueDouble,
+    bool? specialValueBool,
+  }) {
+    return ProductFeature(
+      id: id ?? this.id,
+      sort: sort ?? this.sort,
+      nameEn: nameEn ?? this.nameEn,
+      nameAr: nameAr ?? this.nameAr,
+      descriptionEn: descriptionEn ?? this.descriptionEn,
+      descriptionAr: descriptionAr ?? this.descriptionAr,
+      productId: productId ?? this.productId,
+      hasSpecialValue: hasSpecialValue ?? this.hasSpecialValue,
+      specialValueType: specialValueType ?? this.specialValueType,
+      specialValueInt: specialValueInt ?? this.specialValueInt,
+      specialValueDouble: specialValueDouble ?? this.specialValueDouble,
+      specialValueBool: specialValueBool ?? this.specialValueBool,
+    );
+  }
+
+  @override
+  String toString() {
+    return toJson().toString();
+  }
 }
 
 class ProductPrice extends Equatable {

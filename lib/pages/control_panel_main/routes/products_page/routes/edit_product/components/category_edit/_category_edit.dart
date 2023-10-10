@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:single_vendor_admin_panel/functions/shell_function.dart';
-import 'package:single_vendor_admin_panel/models/product_model.dart';
-import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/routes/edit_product/components/display_product_tile.dart';
+import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/routes/edit_product/components/display_product_consumer.dart';
 import 'package:single_vendor_admin_panel/providers/cat_to_prods/px_cat_to_prods.dart';
 import 'package:single_vendor_admin_panel/providers/products/px_product.dart';
 
@@ -23,25 +22,7 @@ class CategoryEditComponent extends StatelessWidget {
                   title: const Text('Edit Category'),
                   tileColor: Colors.amber.shade200,
                 ),
-                Consumer<PxProduct>(
-                  builder: (context, p, c) {
-                    while (p.product == Product.initial()) {
-                      return const Card(
-                        child: Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Center(
-                            child: Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text('No Product Selected...'),
-                            ),
-                          ),
-                        ),
-                      );
-                    }
-                    final product = p.product;
-                    return DisplayOnlyProductTile(product: product);
-                  },
-                ),
+                const DisplayProductConsumerTile(),
                 Expanded(
                   child: Consumer<PxCategoryToProducts>(
                     builder: (context, ctp, c) {

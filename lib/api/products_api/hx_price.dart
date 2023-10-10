@@ -72,6 +72,8 @@ class HxPrice {
         return ProductPrice.fromJson(e.data);
       }).toList();
 
+      // print(res.documents.first.toString());
+
       return prices;
     } catch (e) {
       rethrow;
