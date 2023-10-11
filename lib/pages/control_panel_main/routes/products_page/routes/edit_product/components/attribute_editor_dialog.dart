@@ -4,6 +4,7 @@ import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/produc
 import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/routes/edit_product/components/_images_edit.dart';
 import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/routes/edit_product/components/_inventory_edit.dart';
 import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/routes/edit_product/components/price_edit/_price_edit.dart';
+import 'display_product_consumer.dart';
 
 class ProductAttributeEditorDialog extends StatefulWidget {
   const ProductAttributeEditorDialog({super.key});
@@ -30,13 +31,9 @@ class _ProductAttributeEditorDialogState
       backgroundColor: Colors.teal.shade50,
       title: Row(
         children: [
-          const Text(
-            "Edit Product Attributes",
-            style: TextStyle(
-              fontSize: 28,
-            ),
+          const Expanded(
+            child: DisplayProductConsumerTile(),
           ),
-          const Spacer(),
           IconButton.filled(
             onPressed: () {
               Navigator.pop(context);

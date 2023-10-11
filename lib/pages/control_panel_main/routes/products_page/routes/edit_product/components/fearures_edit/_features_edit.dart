@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:single_vendor_admin_panel/models/text_field_enums.dart';
-import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/routes/edit_product/components/display_product_consumer.dart';
-import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/routes/edit_product/components/fearures_edit/components/feature_field.dart';
+import 'package:sidebarx/sidebarx.dart';
+import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/routes/edit_product/components/fearures_edit/routes/feature_create.dart';
+import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/routes/edit_product/components/fearures_edit/routes/feature_list.dart';
+import 'package:single_vendor_admin_panel/theme/theme.dart';
 
 class FeaturesEditComponent extends StatefulWidget {
   const FeaturesEditComponent({super.key});
@@ -11,57 +12,55 @@ class FeaturesEditComponent extends StatefulWidget {
 }
 
 class _FeaturesEditComponentState extends State<FeaturesEditComponent> {
-  final formKey = GlobalKey<FormState>();
-  String? _validator(String? value) {
-    if (value == null || value.isEmpty) {
-      return "Empty Fields are not Allowed...";
-    }
-    return null;
+  late final SidebarXController _xController;
+
+  @override
+  void initState() {
+    _xController = SidebarXController(
+      selectedIndex: 0,
+      extended: false,
+    );
+    super.initState();
   }
+
+  final List<Widget> _pages = const [
+    FeatureCreatePage(),
+    FeatureListPage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Card(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Form(
-              key: formKey,
-              child: ListView(
-                children: [
-                  ListTile(
-                    title: const Text('Edit Features'),
-                    tileColor: Colors.brown.shade200,
-                  ),
-                  const DisplayProductConsumerTile(),
-                  ProductFeatureTextField(
-                    lang: FieldLang.en,
-                    type: FieldType.name,
-                    validator: _validator,
-                  ),
-                  ProductFeatureTextField(
-                    lang: FieldLang.ar,
-                    type: FieldType.name,
-                    validator: _validator,
-                  ),
-                  ProductFeatureTextField(
-                    lang: FieldLang.en,
-                    type: FieldType.description,
-                    validator: _validator,
-                  ),
-                  ProductFeatureTextField(
-                    lang: FieldLang.ar,
-                    type: FieldType.description,
-                    validator: _validator,
-                  ),
-                ],
-              ),
+    return Row(
+      children: [
+        SidebarX(
+          controller: _xController,
+          theme: sidebarXthemeRegularDark,
+          extendedTheme: sidebarXthemeExtendedDark,
+          items: [
+            SidebarXItem(
+              label: "Create Feature",
+              iconWidget: const Icon(Icons.create_new_folder),
+              onTap: () {
+                setState(() {
+                  _xController.selectIndex(0);
+                });
+              },
             ),
-          ),
+            SidebarXItem(
+              label: "Edit Feature",
+              iconWidget: const Icon(Icons.edit_document),
+              onTap: () {
+                setState(() {
+                  _xController.selectIndex(1);
+                });
+              },
+            ),
+          ],
         ),
-      ),
+        Expanded(
+          child: _pages[_xController.selectedIndex],
+        ),
+      ],
     );
   }
 }

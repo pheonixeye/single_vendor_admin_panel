@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/routes/edit_product/components/display_product_consumer.dart';
 
 class ImagesEditComponent extends StatelessWidget {
   const ImagesEditComponent({super.key});
@@ -18,7 +17,6 @@ class ImagesEditComponent extends StatelessWidget {
                   title: const Text('Edit Images'),
                   tileColor: Colors.green.shade200,
                 ),
-                const DisplayProductConsumerTile(),
               ],
             ),
           ),

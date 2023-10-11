@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:single_vendor_admin_panel/functions/shell_function.dart';
 import 'package:single_vendor_admin_panel/models/product_model.dart';
-import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/routes/edit_product/components/display_product_consumer.dart';
 import 'package:single_vendor_admin_panel/providers/products/px_product.dart';
 import 'package:single_vendor_admin_panel/providers/products/px_product_price.dart';
 
@@ -42,7 +41,6 @@ class _PriceEditComponentState extends State<PriceEditComponent> {
                     title: const Text('Edit Price'),
                     tileColor: Colors.blue.shade200,
                   ),
-                  const DisplayProductConsumerTile(),
                   Consumer<PxProductPrice>(
                     builder: (context, p, c) {
                       if (p.price != ProductPrice.initial()) {

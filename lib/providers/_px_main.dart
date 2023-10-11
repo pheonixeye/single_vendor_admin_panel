@@ -57,6 +57,13 @@ final List<SingleChildWidget> providers = [
     ),
   ),
   ChangeNotifierProvider(
+    create: (context) => PxProductFeatures(
+      featureService: HxProductFeatures(
+        server: context.read<PxServerStatus>().server!,
+      ),
+    ),
+  ),
+  ChangeNotifierProvider(
     create: (context) => PxProduct(
       productService: HxProduct(
         server: context.read<PxServerStatus>().server!,
@@ -67,13 +74,6 @@ final List<SingleChildWidget> providers = [
   ChangeNotifierProvider(
     create: (context) => PxCategoryToProducts(
       ctpService: HxCatToProd(
-        server: context.read<PxServerStatus>().server!,
-      ),
-    ),
-  ),
-  ChangeNotifierProvider(
-    create: (context) => PxProductFeatures(
-      featureService: HxProductFeatures(
         server: context.read<PxServerStatus>().server!,
       ),
     ),

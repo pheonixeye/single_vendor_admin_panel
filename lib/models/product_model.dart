@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class Product extends Equatable {
+  //TODO: ADD CATEGORY ID
   final String productId;
   final String nameEn;
   final String nameAr;
@@ -140,9 +141,27 @@ class ProductCategory extends Equatable {
       [nameEn, nameAr, descriptionEn, descriptionAr, categoryId];
 }
 
-enum SpecialValueType { int, bool, double, none }
+enum SpecialValueType {
+  int,
+  bool,
+  double,
+  none;
 
-class ProductFeature {
+  static SpecialValueType fromString(String value) {
+    switch (value) {
+      case 'int':
+        return SpecialValueType.int;
+      case 'double':
+        return SpecialValueType.double;
+      case 'bool':
+        return SpecialValueType.bool;
+      default:
+        return SpecialValueType.none;
+    }
+  }
+}
+
+class ProductFeature extends Equatable {
   final String? id;
   final int sort;
   final String nameEn;
@@ -152,11 +171,13 @@ class ProductFeature {
   final String productId;
   final bool hasSpecialValue;
   final SpecialValueType specialValueType;
-  final int specialValueInt;
-  final double specialValueDouble;
-  final bool specialValueBool;
+  final int? specialValueInt;
+  final double? specialValueDouble;
+  final bool? specialValueBool;
 
-  ProductFeature({
+  String get svt => specialValueType.name;
+
+  const ProductFeature({
     required this.id,
     required this.sort,
     required this.nameEn,
@@ -181,15 +202,15 @@ class ProductFeature {
       descriptionAr: json['description_ar'],
       productId: json['product_id'],
       hasSpecialValue: json['has_special_value'],
-      specialValueType: json['special_value_type'],
+      specialValueType: SpecialValueType.fromString(json['special_value_type']),
       specialValueInt: json['special_value_int'],
-      specialValueDouble: json['special_value_double'].toDouble(),
+      specialValueDouble: json['special_value_double'],
       specialValueBool: json['special_value_bool'],
     );
   }
 
   factory ProductFeature.initial() {
-    return ProductFeature(
+    return const ProductFeature(
       id: null,
       sort: 0,
       nameEn: '',
@@ -199,15 +220,14 @@ class ProductFeature {
       productId: '',
       hasSpecialValue: false,
       specialValueType: SpecialValueType.none,
-      specialValueInt: 0,
-      specialValueDouble: 0.0,
-      specialValueBool: false,
+      specialValueInt: null,
+      specialValueDouble: null,
+      specialValueBool: null,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      r'$id': id,
       'sort': sort,
       'name_en': nameEn,
       'name_ar': nameAr,
@@ -215,7 +235,7 @@ class ProductFeature {
       'description_ar': descriptionAr,
       'product_id': productId,
       'has_special_value': hasSpecialValue,
-      'special_value_type': specialValueType,
+      'special_value_type': specialValueType.name,
       'special_value_int': specialValueInt,
       'special_value_double': specialValueDouble,
       'special_value_bool': specialValueBool,
@@ -252,10 +272,43 @@ class ProductFeature {
     );
   }
 
+  Map<String, dynamic> forPrint() {
+    return {
+      'id': id,
+      'sort': sort,
+      'name_en': nameEn,
+      'name_ar': nameAr,
+      'description_en': descriptionEn,
+      'description_ar': descriptionAr,
+      'product_id': productId,
+      'has_special_value': hasSpecialValue,
+      'special_value_type': specialValueType.name,
+      'special_value_int': specialValueInt,
+      'special_value_double': specialValueDouble,
+      'special_value_bool': specialValueBool,
+    };
+  }
+
   @override
   String toString() {
-    return toJson().toString();
+    return forPrint().toString();
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        sort,
+        nameEn,
+        nameAr,
+        descriptionEn,
+        descriptionAr,
+        productId,
+        hasSpecialValue,
+        specialValueType,
+        specialValueDouble,
+        specialValueBool,
+        specialValueInt
+      ];
 }
 
 class ProductPrice extends Equatable {

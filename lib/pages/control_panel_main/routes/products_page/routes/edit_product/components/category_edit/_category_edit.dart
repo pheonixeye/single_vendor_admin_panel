@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:single_vendor_admin_panel/functions/shell_function.dart';
-import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/routes/edit_product/components/display_product_consumer.dart';
 import 'package:single_vendor_admin_panel/providers/cat_to_prods/px_cat_to_prods.dart';
 import 'package:single_vendor_admin_panel/providers/products/px_product.dart';
 
@@ -22,7 +21,6 @@ class CategoryEditComponent extends StatelessWidget {
                   title: const Text('Edit Category'),
                   tileColor: Colors.amber.shade200,
                 ),
-                const DisplayProductConsumerTile(),
                 Expanded(
                   child: Consumer<PxCategoryToProducts>(
                     builder: (context, ctp, c) {

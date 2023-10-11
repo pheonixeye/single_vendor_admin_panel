@@ -19,9 +19,9 @@ class HxProductCategory {
         databaseId: CREDS.DATABASE_ID,
         collectionId: CREDS.PRODUCT_CATEGORY_COLLECTION_ID,
       );
-      List<Map<String, dynamic>> _temp =
+      List<Map<String, dynamic>> temp =
           doc.documents.map((e) => e.data).toList();
-      List<ProductCategory> cats = ProductCategory.list(_temp);
+      List<ProductCategory> cats = ProductCategory.list(temp);
       return cats;
     } catch (e) {
       rethrow;

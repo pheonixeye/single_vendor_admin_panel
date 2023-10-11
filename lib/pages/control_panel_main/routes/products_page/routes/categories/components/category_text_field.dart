@@ -23,16 +23,16 @@ class CategoryTextField extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Consumer<PxProductCategory>(
             builder: (context, cat, c) {
-              final _selected = cat.category;
+              final selected = cat.category;
               return TextFormField(
                 initialValue: switch (type) {
                   FieldType.name => switch (lang) {
-                      FieldLang.en => _selected.nameEn,
-                      FieldLang.ar => _selected.nameAr,
+                      FieldLang.en => selected.nameEn,
+                      FieldLang.ar => selected.nameAr,
                     },
                   FieldType.description => switch (lang) {
-                      FieldLang.en => _selected.descriptionEn,
-                      FieldLang.ar => _selected.descriptionAr,
+                      FieldLang.en => selected.descriptionEn,
+                      FieldLang.ar => selected.descriptionAr,
                     },
                 },
                 decoration: InputDecoration(

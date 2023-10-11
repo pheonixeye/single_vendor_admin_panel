@@ -77,8 +77,8 @@ class PxProductCategory extends ChangeNotifier {
 
   Future<List<ProductCategory>> listProductCategories() async {
     try {
-      final _list = await categoryService.listCategories();
-      _categories = _list!;
+      final list = await categoryService.listCategories();
+      _categories = list!;
       notifyListeners();
       return _categories;
     } catch (e) {

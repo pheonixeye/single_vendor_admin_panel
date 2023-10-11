@@ -14,13 +14,10 @@ class HxProductFeatures {
 
   Future<ProductFeature?> createFeature(ProductFeature feature) async {
     try {
-      feature = feature.copyWith(
-        id: const Uuid().v4(),
-      );
       final res = await db.createDocument(
         databaseId: CREDS.DATABASE_ID,
         collectionId: CREDS.PRODUCT_FEATURES_COLLECTION_ID,
-        documentId: feature.id!,
+        documentId: const Uuid().v4(),
         data: feature.toJson(),
       );
 

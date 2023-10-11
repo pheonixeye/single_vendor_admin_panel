@@ -23,16 +23,16 @@ class ProductTextField extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Consumer<PxProduct>(
             builder: (context, p, c) {
-              final _selected = p.product;
+              final selected = p.product;
               return TextFormField(
                 initialValue: switch (type) {
                   FieldType.name => switch (lang) {
-                      FieldLang.en => _selected.nameEn,
-                      FieldLang.ar => _selected.nameAr,
+                      FieldLang.en => selected.nameEn,
+                      FieldLang.ar => selected.nameAr,
                     },
                   FieldType.description => switch (lang) {
-                      FieldLang.en => _selected.descriptionEn,
-                      FieldLang.ar => _selected.descriptionAr,
+                      FieldLang.en => selected.descriptionEn,
+                      FieldLang.ar => selected.descriptionAr,
                     },
                 },
                 decoration: InputDecoration(
