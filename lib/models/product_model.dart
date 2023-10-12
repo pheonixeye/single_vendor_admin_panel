@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class Product extends Equatable {
-  //TODO: ADD CATEGORY ID
+  //FIXME: ADD CATEGORY ID
   final String productId;
   final String nameEn;
   final String nameAr;

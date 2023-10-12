@@ -10,6 +10,11 @@ class PxProductFeatures extends ChangeNotifier {
 
   final HxProductFeatures featureService;
 
+  void initFeature() {
+    _productFeature = ProductFeature.initial();
+    notifyListeners();
+  }
+
   void setOrUpdateFeature({
     String? id,
     int? sort,

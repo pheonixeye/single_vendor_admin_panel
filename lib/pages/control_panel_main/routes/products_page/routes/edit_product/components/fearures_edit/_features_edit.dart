@@ -39,7 +39,9 @@ class _FeaturesEditComponentState extends State<FeaturesEditComponent> {
           items: [
             SidebarXItem(
               label: "Create Feature",
-              iconWidget: const Icon(Icons.create_new_folder),
+              iconWidget: const Tooltip(
+                  message: 'Create Feature',
+                  child: Icon(Icons.create_new_folder)),
               onTap: () {
                 setState(() {
                   _xController.selectIndex(0);
@@ -48,7 +50,10 @@ class _FeaturesEditComponentState extends State<FeaturesEditComponent> {
             ),
             SidebarXItem(
               label: "Edit Feature",
-              iconWidget: const Icon(Icons.edit_document),
+              iconWidget: const Tooltip(
+                message: 'Edit Feature',
+                child: Icon(Icons.edit_document),
+              ),
               onTap: () {
                 setState(() {
                   _xController.selectIndex(1);

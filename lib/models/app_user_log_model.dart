@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class AppUserLog extends Equatable {
-  //TODO: remove unnessecary data
+  //FIXME: remove unnessecary data
   final String event;
   final String userId;
   final String userEmail;
