@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:single_vendor_admin_panel/functions/shell_function.dart';
@@ -12,11 +15,21 @@ class PriceEditComponent extends StatefulWidget {
   State<PriceEditComponent> createState() => _PriceEditComponentState();
 }
 
-class _PriceEditComponentState extends State<PriceEditComponent> {
+class _PriceEditComponentState extends State<PriceEditComponent>
+    with AfterLayoutMixin {
   final _priceController = TextEditingController();
   final _discountController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
+
+  @override
+  FutureOr<void> afterFirstLayout(BuildContext context) {
+    final priceProvider = context.read<PxProductPrice>();
+    if (priceProvider.price != ProductPrice.initial()) {
+      _discountController.text = '${priceProvider.price.discount}';
+      _priceController.text = '${priceProvider.price.price}';
+    }
+  }
 
   @override
   void dispose() {
@@ -43,10 +56,6 @@ class _PriceEditComponentState extends State<PriceEditComponent> {
                   ),
                   Consumer<PxProductPrice>(
                     builder: (context, p, c) {
-                      if (p.price != ProductPrice.initial()) {
-                        _discountController.text = '${p.price.discount}';
-                        _priceController.text = '${p.price.price}';
-                      }
                       return Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [

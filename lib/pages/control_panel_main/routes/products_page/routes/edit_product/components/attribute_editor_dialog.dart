@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/routes/edit_product/components/category_edit/_category_edit.dart';
 import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/routes/edit_product/components/fearures_edit/_features_edit.dart';
-import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/routes/edit_product/components/_images_edit.dart';
-import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/routes/edit_product/components/_inventory_edit.dart';
+import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/routes/edit_product/components/images_edit/_images_edit.dart';
+import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/routes/edit_product/components/inventory_edit/_inventory_edit.dart';
 import 'package:single_vendor_admin_panel/pages/control_panel_main/routes/products_page/routes/edit_product/components/price_edit/_price_edit.dart';
 import 'display_product_consumer.dart';
 

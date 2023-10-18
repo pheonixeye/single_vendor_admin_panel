@@ -3,9 +3,7 @@ import 'package:single_vendor_admin_panel/api/category_to_product/hx_cat_prod.da
 import 'package:single_vendor_admin_panel/models/category_to_product.dart';
 
 class PxCategoryToProducts extends ChangeNotifier {
-  PxCategoryToProducts({required this.ctpService}) {
-    listCTP();
-  }
+  PxCategoryToProducts({required this.ctpService});
 
   CatToProd _ctp = CatToProd.initial();
   CatToProd get ctp => _ctp;

@@ -11,4 +11,7 @@ class CREDS {
   //todo: CHECK STATUS - GET ID
   static const String CAT_PRODS_COLLECTION_ID = '651ef2a4e49552281469';
   static const String PRODUCT_IMAGES_COLLECTION_ID = '651b16ac12a05cf9c712';
+
+  ///file storage for product images
+  static const String PRODUCT_IMAGES_BUCKET_ID = '651c6b2bea02e455efe7';
 }

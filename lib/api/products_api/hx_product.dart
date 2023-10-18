@@ -1,6 +1,7 @@
 import 'package:appwrite/appwrite.dart' as client_sdk;
 
 import 'package:single_vendor_admin_panel/api/constants/servers.dart';
+import 'package:single_vendor_admin_panel/api/products_api/hx_product_images.dart';
 import 'package:single_vendor_admin_panel/constants/creds.dart';
 import 'package:single_vendor_admin_panel/models/product_model.dart';
 import 'package:single_vendor_admin_panel/models/text_field_enums.dart';
@@ -9,9 +10,11 @@ import 'package:uuid/uuid.dart';
 class HxProduct {
   final Server server;
   late final client_sdk.Databases db;
+  late final HxProductImages imagesService;
 
   HxProduct({required this.server}) {
     db = client_sdk.Databases(server.clientClient);
+    imagesService = HxProductImages(server: server);
   }
   Future<Product?> createProduct(Product product) async {
     try {
@@ -22,7 +25,12 @@ class HxProduct {
         documentId: newProduct.productId,
         data: newProduct.toJson(),
       );
+
       final addedProduct = Product.fromJson(res.data);
+
+      ///create db reference for adding images of a newly created product
+      await imagesService.createProductImagesReference(addedProduct.productId);
+
       return addedProduct;
     } catch (e) {
       rethrow;

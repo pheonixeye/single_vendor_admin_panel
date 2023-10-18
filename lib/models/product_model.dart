@@ -446,12 +446,15 @@ class ProductImages extends Equatable {
   factory ProductImages.fromJson(Map<String, dynamic> json) {
     return ProductImages(
       productId: json['product_id'],
-      images: json['images'],
+      images: _ListDynamicToListString(json['images']),
     );
   }
 
   factory ProductImages.initial() {
-    return const ProductImages(productId: '', images: []);
+    return const ProductImages(
+      productId: '',
+      images: [],
+    );
   }
 
   ProductImages copyWith({String? productId, List<String>? images}) {
@@ -462,24 +465,22 @@ class ProductImages extends Equatable {
   }
 
   ProductImages addImage(String img) {
-    final List<String> imgs = images;
-    if (!imgs.contains(img)) {
-      imgs.add(img);
+    if (!images.contains(img)) {
+      images.add(img);
     }
     return ProductImages(
       productId: productId,
-      images: imgs,
+      images: images,
     );
   }
 
   ProductImages removeImage(String img) {
-    final List<String> imgs = images;
-    if (imgs.contains(img)) {
-      imgs.remove(img);
+    if (images.contains(img)) {
+      images.remove(img);
     }
     return ProductImages(
       productId: productId,
-      images: imgs,
+      images: images,
     );
   }
 
@@ -495,4 +496,9 @@ class ProductImages extends Equatable {
 
   @override
   String toString() => toJson().toString();
+}
+
+// ignore: non_constant_identifier_names
+List<String> _ListDynamicToListString(List<dynamic> list) {
+  return list.map((e) => e.toString()).toList();
 }

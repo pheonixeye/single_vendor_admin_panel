@@ -1,11 +1,25 @@
+import 'dart:async';
+
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:single_vendor_admin_panel/functions/shell_function.dart';
 import 'package:single_vendor_admin_panel/providers/cat_to_prods/px_cat_to_prods.dart';
 import 'package:single_vendor_admin_panel/providers/products/px_product.dart';
 
-class CategoryEditComponent extends StatelessWidget {
+class CategoryEditComponent extends StatefulWidget {
   const CategoryEditComponent({super.key});
+
+  @override
+  State<CategoryEditComponent> createState() => _CategoryEditComponentState();
+}
+
+class _CategoryEditComponentState extends State<CategoryEditComponent>
+    with AfterLayoutMixin {
+  @override
+  FutureOr<void> afterFirstLayout(BuildContext context) async {
+    await context.read<PxCategoryToProducts>().listCTP();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -10,3 +10,13 @@ extension ToDouble on dynamic {
     }
   }
 }
+
+extension ToListString on dynamic {
+  List<String> toListString() {
+    if (this is List<dynamic>) {
+      return map((e) => e.toString()).toList();
+    } else {
+      throw Exception("Expected a List<Dynamic>, got $runtimeType");
+    }
+  }
+}
