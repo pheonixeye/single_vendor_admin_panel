@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:single_vendor_admin_panel/components/main_snackbar.dart';
+import 'package:single_vendor_admin_panel/functions/build_image_url.dart';
 import 'package:single_vendor_admin_panel/functions/shell_function.dart';
 import 'package:single_vendor_admin_panel/models/product_model.dart';
 import 'package:single_vendor_admin_panel/providers/products/px_product.dart';
@@ -113,32 +114,44 @@ class _ImagesEditComponentState extends State<ImagesEditComponent>
                       return GridView.builder(
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
+                          crossAxisCount: 3,
                           mainAxisExtent: 300,
                         ),
                         itemCount: i.images.images.length,
                         itemBuilder: (context, index) {
+                          final String imageId = i.images.images[index];
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Card(
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: GridTile(
-                                  footer: GridTileBar(
-                                    backgroundColor: primaryColor,
-                                    leading: CircleAvatar(
-                                      child: Text(index.toString()),
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      child: Image.network(
+                                        buildImageUrl(imageId),
+                                      ),
                                     ),
-                                    title: Text(i.images.images[index]),
-                                    trailing: FloatingActionButton(
-                                      heroTag: 'img-delete-$index',
-                                      onPressed: () async {},
-                                      child: const Icon(Icons.delete),
+                                    GridTileBar(
+                                      backgroundColor: primaryColor,
+                                      leading: CircleAvatar(
+                                        child: Text(index.toString()),
+                                      ),
+                                      title: Text(i.images.images[index]),
+                                      trailing: FloatingActionButton.small(
+                                        heroTag: 'img-delete-$index',
+                                        onPressed: () async {
+                                          await shellFunction(
+                                            context,
+                                            toExecute: () {
+                                              i.deleteProductImage(imageId);
+                                            },
+                                          );
+                                        },
+                                        child: const Icon(Icons.delete),
+                                      ),
                                     ),
-                                  ),
-                                  child: Image.network(
-                                    'https://picsum.photos/300',
-                                  ),
+                                  ],
                                 ),
                               ),
                             ),
