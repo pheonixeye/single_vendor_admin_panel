@@ -1,0 +1,137 @@
+[33mcommit 7bacebb23205760741d609a965fa1402a8c5ac4a[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: pheonixeye <drkazgm@gmail.com>
+Date:   Sat Oct 21 22:39:32 2023 +0300
+
+    images done - to work on inventory
+
+[33mcommit 3a4e49795696e8ab839d350273baba3b748ecade[m
+Author: pheonixeye <drkazgm@gmail.com>
+Date:   Wed Oct 18 23:58:26 2023 +0300
+
+    fixed minor bugs - working on images - add to list error
+
+[33mcommit 1bc14f7c1f8acd4233c456f4fac26a1653491a20[m
+Author: pheonixeye <drkazgm@gmail.com>
+Date:   Thu Oct 12 23:56:35 2023 +0300
+
+    features complete - to work on images
+
+[33mcommit bf6e3bd0b7e0202f6589e2e389b2cebb0d33c540[m
+Author: pheonixeye <drkazgm@gmail.com>
+Date:   Wed Oct 11 23:27:18 2023 +0300
+
+    creating product feature done - to work on editing features
+
+[33mcommit 2f74b01ea08dde831288a1ee9a4d20810846ce70[m
+Author: pheonixeye <drkazgm@gmail.com>
+Date:   Tue Oct 10 23:39:05 2023 +0300
+
+    working on product features
+
+[33mcommit e74784c65df9c0786d058e2f62511721dfb6e56c[m
+Author: pheonixeye <drkazgm@gmail.com>
+Date:   Mon Oct 9 22:50:02 2023 +0300
+
+    product categorization done - to work on product images
+
+[33mcommit 8f74a44f673a3558d3f397013b5ebe2f19deeaba[m
+Author: pheonixeye <drkazgm@gmail.com>
+Date:   Sat Oct 7 23:46:08 2023 +0300
+
+    working on categories in ctp
+
+[33mcommit 7eadcd1e547b6e0fa4f6078352d88d9bf29113b1[m
+Author: pheonixeye <drkazgm@gmail.com>
+Date:   Sat Oct 7 21:33:08 2023 +0300
+
+    pricing done - working on categories of products
+
+[33mcommit 3c865a47cbc92c88a281ec75bf6fc77c943591ba[m
+Author: pheonixeye <drkazgm@gmail.com>
+Date:   Thu Oct 5 23:50:26 2023 +0300
+
+    working on product pricing - category ref in cat_prod done
+
+[33mcommit 46a7fd916a9158a7701f3035dfc3f8572caa1060[m
+Author: pheonixeye <drkazgm@gmail.com>
+Date:   Wed Oct 4 23:25:30 2023 +0300
+
+    product edit done - product attributes dialog ongoing
+
+[33mcommit c48e39c6f42be9a68e03d21379ca67361931231a[m
+Author: pheonixeye <drkazgm@gmail.com>
+Date:   Tue Oct 3 23:08:11 2023 +0300
+
+    create product:done - start adding rest of product data
+
+[33mcommit 9c57f39b5c44c75f356deb8300d5b2d1b8ab359e[m
+Author: pheonixeye <drkazgm@gmail.com>
+Date:   Mon Oct 2 23:11:08 2023 +0300
+
+    product modeling
+
+[33mcommit b113e8dba3bdabdcd9d70857541aebe888d28391[m
+Author: pheonixeye <drkazgm@gmail.com>
+Date:   Fri Sep 29 22:32:05 2023 +0300
+
+    to revise categories - start making new products
+
+[33mcommit 13ecbc7b6fb52fc9a14609215d135748f636cf30[m
+Author: pheonixeye <drkazgm@gmail.com>
+Date:   Fri Sep 29 04:44:46 2023 +0300
+
+    done with units api - to write tests?? - start categories
+
+[33mcommit 1631b8bb2adaeec9922ce39c6024e69a66f986d9[m
+Author: pheonixeye <drkazgm@gmail.com>
+Date:   Thu Sep 28 22:57:17 2023 +0300
+
+    productUints done
+
+[33mcommit 41c39e5b984e76951b8b2f65afebb3cfbda1429e[m
+Author: pheonixeye <drkazgm@gmail.com>
+Date:   Wed Sep 27 23:08:52 2023 +0300
+
+    appwrite db design for products to be generic
+
+[33mcommit 4fdf14b15a32c8bd08b7b3afe65ace02f978ef63[m
+Author: pheonixeye <drkazgm@gmail.com>
+Date:   Wed Sep 27 22:13:09 2023 +0300
+
+    75% hr page complete - to start on creating databases/products
+
+[33mcommit f538355b658646e08ac1579603868d698bc4a1c1[m
+Author: pheonixeye <drkazgm@gmail.com>
+Date:   Tue Sep 26 04:00:47 2023 +0300
+
+    working on hr pages - half done
+
+[33mcommit f3096fbdf4f403a906f08cb72b480fd83e42f945[m
+Author: pheonixeye <drkazgm@gmail.com>
+Date:   Mon Sep 25 21:37:53 2023 +0300
+
+    added both client & server appwrite sdk - found a way to use both - handle navigation based on login role
+
+[33mcommit 1403674632df52e4892518c988fbe3332769aa5c[m
+Author: pheonixeye <drkazgm@gmail.com>
+Date:   Mon Sep 25 03:18:57 2023 +0300
+
+    still on authentication - understanding mechanics still
+
+[33mcommit 1edae694cff24e16a6b650023c5ae8f1fe7c7bc6[m
+Author: pheonixeye <drkazgm@gmail.com>
+Date:   Sun Sep 24 10:03:56 2023 +0300
+
+    working on authentication
+
+[33mcommit c6732c06f7b2032bb3c8dedd744d17186ea9496c[m
+Author: pheonixeye <drkazgm@gmail.com>
+Date:   Fri Sep 15 01:08:20 2023 +0300
+
+    basic routing, create new user page
+
+[33mcommit 49c7133f3b9d8b474d758b67134286a1389e4e1a[m
+Author: pheonixeye <drkazgm@gmail.com>
+Date:   Wed Sep 13 03:39:28 2023 +0300
+
+    empty project

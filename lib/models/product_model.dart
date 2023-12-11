@@ -72,6 +72,7 @@ class Product extends Equatable {
 }
 
 class ProductCategory extends Equatable {
+  //TODO: add an image and a thumbnail
   final String nameEn;
   final String nameAr;
   final String descriptionEn;
@@ -367,14 +368,14 @@ class ProductInventory {
   final String productId;
   final bool available;
   final double amount;
-  final String unit;
+  final String unitId;
   final String dateWhenAvailable;
 
   ProductInventory({
     required this.productId,
     required this.available,
     required this.amount,
-    required this.unit,
+    required this.unitId,
     required this.dateWhenAvailable,
   });
 }
